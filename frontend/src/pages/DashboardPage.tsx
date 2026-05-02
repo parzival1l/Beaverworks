@@ -43,10 +43,10 @@ export function DashboardPage() {
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-8">
-      <header className="mb-6 flex items-center justify-between">
-        <p className="text-2xl font-semibold text-cherry">Altru</p>
+      <header className="mb-6 flex items-center justify-between rounded-xl bg-trust px-6 py-4 text-white shadow-sm">
+        <p className="text-2xl font-semibold">Altru</p>
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-cherry text-sm font-semibold text-white">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-trust-light text-sm font-semibold text-white">
             DV
           </div>
           <p className="text-sm font-semibold">Demo Viewer</p>
@@ -60,9 +60,12 @@ export function DashboardPage() {
       <div className="grid gap-6 lg:grid-cols-5">
         <section className="space-y-4 lg:col-span-3">
           {mode === 'filtered' ? (
-            <div className="rounded-xl border border-border bg-white px-4 py-3 text-sm">
+            <div className="rounded-xl border-l-4 border-trust bg-trust-muted px-4 py-3 text-sm text-trust">
               Charities matched to your answers.{' '}
-              <Link to="/dashboard?mode=all" className="font-semibold text-cherry">
+              <Link
+                to="/dashboard?mode=all"
+                className="font-semibold text-trust-light underline decoration-transparent hover:text-trust hover:underline"
+              >
                 Show all
               </Link>
             </div>
@@ -72,11 +75,11 @@ export function DashboardPage() {
             placeholder="Search by charity name or category"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            className="w-full rounded-xl border border-border px-4 py-3"
+            className="w-full rounded-xl border border-form bg-white px-4 py-3 text-charcoal placeholder:text-charcoal-muted focus:border-trust focus:outline-none focus:ring-2 focus:ring-trust/30"
           />
 
           {loading ? (
-            <p className="text-sm text-text-secondary">Loading recommendations...</p>
+            <p className="text-sm text-charcoal-muted">Loading recommendations...</p>
           ) : (
             <div className="grid gap-4">
               {visibleCharities.map((charity) => (

@@ -92,7 +92,7 @@ export function QuestionnairePage() {
         {step > 0 ? <BackButton label="Previous question" /> : <span />}
         <button
           type="button"
-          className="text-sm font-semibold text-cherry"
+          className="rounded-lg border-2 border-trust bg-transparent px-3 py-2 text-sm font-semibold text-trust hover:bg-trust-muted"
           onClick={() => navigate('/dashboard?mode=all')}
         >
           Skip
@@ -107,9 +107,9 @@ export function QuestionnairePage() {
         animate={{ x: 0, opacity: 1 }}
         exit={{ x: -30, opacity: 0 }}
         transition={{ duration: 0.25 }}
-        className="mt-6 rounded-2xl border border-border bg-white p-6"
+        className="mt-6 rounded-2xl border border-divider bg-ivory-dark p-6"
       >
-        <h1 className="text-2xl">{question.title}</h1>
+        <h1 className="text-2xl text-charcoal">{question.title}</h1>
         <div className="mt-5 grid gap-3">
           {question.options.map((option) => {
             const active = answers[question.key] === option
@@ -118,10 +118,10 @@ export function QuestionnairePage() {
                 key={option}
                 type="button"
                 onClick={() => setAnswer(option)}
-                className={`rounded-xl border px-4 py-3 text-left text-sm ${
+                className={`rounded-xl border-2 px-4 py-3 text-left text-sm ${
                   active
-                    ? 'border-cherry bg-red-50 text-cherry'
-                    : 'border-border hover:bg-cream'
+                    ? 'border-trust bg-trust-muted text-trust'
+                    : 'border-divider bg-ivory-dark text-charcoal hover:border-trust'
                 }`}
               >
                 {option}
@@ -135,7 +135,7 @@ export function QuestionnairePage() {
             type="button"
             disabled={!answers[question.key]}
             onClick={next}
-            className="rounded-lg bg-cherry px-4 py-2 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40"
+            className="rounded-lg bg-give px-4 py-2 font-semibold text-white hover:bg-give-dark disabled:cursor-not-allowed disabled:opacity-40"
           >
             {step === questions.length - 1 ? 'See my charities →' : 'Next'}
           </button>

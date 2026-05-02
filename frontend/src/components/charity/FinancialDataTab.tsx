@@ -23,7 +23,7 @@ export function FinancialDataTab({ financial }: FinancialDataTabProps) {
 
   return (
     <div className="space-y-6">
-      <p className="text-sm text-text-secondary">
+      <p className="text-sm text-charcoal-muted">
         Fiscal year end: {financial.fiscalYearEnd}
       </p>
       <div className="grid gap-4 md:grid-cols-2">
@@ -46,22 +46,22 @@ export function FinancialDataTab({ financial }: FinancialDataTabProps) {
       </div>
 
       <div>
-        <h4 className="mb-3 text-sm font-semibold text-text-primary">
+        <h4 className="mb-3 text-sm font-semibold text-charcoal">
           Expenditure breakdown
         </h4>
-        <div className="flex h-5 overflow-hidden rounded-full bg-cream-dark">
+        <div className="flex h-5 overflow-hidden rounded-full bg-ivory-dark">
           <div
-            className="bg-success"
+            className="bg-give"
             style={{ width: `${charitableShare}%` }}
             title={`Charitable ${charitableShare.toFixed(1)}%`}
           />
           <div
-            className="bg-warning"
+            className="bg-warm"
             style={{ width: `${fundraisingShare}%` }}
             title={`Fundraising ${fundraisingShare.toFixed(1)}%`}
           />
           <div
-            className="bg-cherry"
+            className="bg-trust-muted"
             style={{ width: `${managementShare}%` }}
             title={`Management ${managementShare.toFixed(1)}%`}
           />
@@ -73,9 +73,9 @@ export function FinancialDataTab({ financial }: FinancialDataTabProps) {
 
 function MetricCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-border bg-white p-4">
-      <p className="text-sm text-text-secondary">{label}</p>
-      <p className="mt-2 text-xl font-semibold text-text-primary">{value}</p>
+    <div className="rounded-xl border border-divider bg-ivory-dark p-4">
+      <p className="text-sm text-charcoal-muted">{label}</p>
+      <p className="mt-2 text-xl font-semibold text-charcoal">{value}</p>
     </div>
   )
 }

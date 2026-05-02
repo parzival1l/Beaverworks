@@ -4,6 +4,15 @@
 
 ---
 
+## 2026-05-02 13:52 ET — Color system overhaul: trust-first palette
+
+- **Files:** `frontend/tailwind.config.js`, `frontend/src/index.css`, all page and component files in `frontend/src/`
+- **What:** Replaced cherry red primary with psychology-backed palette (trust blue primary, green CTAs, orange accent only, red for alerts only)
+- **Why:** Red primary causes anxiety/distrust on donation platforms; green donate buttons outperform red by 15–30%
+- **Commands:** `cd frontend && npx vitest run && npm run build` — all passed; pushed `cursor/frontend-charity-platform`, merged to `main`, `git push origin main` (commit: `feat(frontend): trust-first color system for donation UX`)
+
+---
+
 ## 2026-05-02 13:46 ET — Tax optimizer: over-optimal UI + version `frontend/src/lib`
 
 - **Files:** `.gitignore`, `frontend/src/lib/taxCalculator.ts`, `frontend/src/components/tax/TaxOptimizer.tsx`, `frontend/src/__tests__/taxCalculator.test.ts`, `frontend/src/pages/PaymentPage.tsx`
