@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // scripts/playwright-tour.mjs
 //
-// Opens the Beaverworks frontend in a headed Chromium window so you can watch it
+// Opens the Altru frontend in a headed Chromium window so you can watch it
 // live, takes a screenshot of the landing page, and keeps the browser open until
 // you close it (or Ctrl-C the parent script).
 //

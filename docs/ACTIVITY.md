@@ -1,8 +1,15 @@
 # Activity Log
 
-> Session-level changelog for Beaverworks. See [feature-process.md](./feature-process.md) for phase-level status.
+> Session-level changelog for Altru. See [feature-process.md](./feature-process.md) for phase-level status.
 
 ---
+
+## 2026-05-02 19:18 ET — Repository rename: Altru
+
+- **Files:** `README.md`, `package.json`, `package-lock.json`, `backend/package.json`, `backend/package-lock.json`, `agent/package.json`, `agent/package-lock.json`, `backend/src/index.ts`, `agent/agent.config.ts`, `scripts/launch-dev.sh`, `scripts/playwright-tour.mjs`, `.cursor/rules/core.mdc`, `.cursor/rules/git.mdc`, `docs/architecture.md`, `docs/feature-process.md`, `docs/ACTIVITY.md`
+- **What:** Renamed repository-facing identity to Altru across package metadata, documentation, Cursor rules, scripts, and startup messaging; renamed the GitHub repository to `parzival1l/Altru` and updated local `origin`.
+- **Why:** Align repository and developer-facing project identity with the Altru platform name.
+- **Commands:** GitHub repository rename via `gh`; `git remote set-url origin git@github-parzival1l:parzival1l/Altru.git`; old-name `rg` sweep; `npm --prefix backend test -- --runInBand`
 
 ## 2026-05-02 19:08 ET — README: restore preview image + line-by-line docs links
 

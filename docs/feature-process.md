@@ -1,4 +1,4 @@
-# Beaverworks — Feature Process
+# Altru — Feature Process
 
 > Phase-level tracking. Update when a phase status changes meaningfully (shipped, blocked, new phase added). For session-level detail, see [ACTIVITY.md](./ACTIVITY.md).
 
@@ -12,7 +12,7 @@
 
 | Item | Status |
 | --- | --- |
-| Git repo cloned from `parzival1l/Beaverworks` | ✅ Done |
+| Git repo cloned from `parzival1l/Altru` | ✅ Done |
 | `.cursor/rules/core.mdc` (TDD + architecture update rule) | ✅ Done |
 | `.cursor/rules/git.mdc` (branch-first + `docs/ACTIVITY.md` format) | ✅ Done |
 | [`docs/architecture.md`](./architecture.md) (SSOT) | ✅ Done |

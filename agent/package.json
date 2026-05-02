@@ -1,5 +1,5 @@
 {
-  "name": "beaverworks-agent",
+  "name": "altru-agent",
   "version": "0.1.0",
   "private": true,
   "description": "Botpress ADK agent for Altru charity discovery RAG",

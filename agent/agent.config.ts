@@ -1,7 +1,7 @@
 import { defineConfig, z } from "@botpress/runtime";
 
 /**
- * Altru / Beaverworks agent. Webchat-only at this stage. RAG corpus is the
+ * Altru agent. Webchat-only at this stage. RAG corpus is the
  * Canadian charity dataset under `agent/data/charities/` (regenerated via
  * `npm run ingest`). The `searchCharities` workflow wraps retrieval +
  * per-result rationale and is the entry point Express proxies to.

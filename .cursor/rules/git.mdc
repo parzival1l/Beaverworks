@@ -3,7 +3,7 @@ description: Git workflow, docs/ACTIVITY.md changelog; commit and push only afte
 alwaysApply: false
 ---
 
-# Beaverworks — Git and Activity Logging
+# Altru — Git and Activity Logging
 
 **When to use this rule:** Whenever you finish a task, touch versioned project files, or the user asks about history or commits.
 

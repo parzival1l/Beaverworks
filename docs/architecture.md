@@ -1,4 +1,4 @@
-# Beaverworks — Architecture
+# Altru — Architecture
 
 > **SSOT for system design.** Update this file whenever any service, data flow, API contract, or component changes. See `.cursor/rules/core.mdc` for the update rule.
 
@@ -137,7 +137,7 @@ flowchart LR
 
 ### `POST /api/questionnaire/submit`
 
-- **Origin:** Integrated from `[cursor/questionnaire-feature](https://github.com/parzival1l/Beaverworks/tree/cursor/questionnaire-feature)`; request shape uses Altru's `**QuestionnaireAnswers`** keys: `causes`, `beneficiaries`, `geography`, `givingStyle` (see `backend/src/types/questionnaire.ts` and `frontend/src/types/charity.ts`).
+- **Origin:** Integrated from `[cursor/questionnaire-feature](https://github.com/parzival1l/Altru/tree/cursor/questionnaire-feature)`; request shape uses Altru's `**QuestionnaireAnswers`** keys: `causes`, `beneficiaries`, `geography`, `givingStyle` (see `backend/src/types/questionnaire.ts` and `frontend/src/types/charity.ts`).
 - **Request body:**
 
 ```json
@@ -240,7 +240,7 @@ Ports are non-overlapping: frontend `5173`, Express `3002`, ADK bot `3000`, ADK 
 ## Project Structure
 
 ```
-Beaverworks/
+Altru/
 ├── agent/                          # Botpress ADK project (port 3000)
 │   ├── agent.config.ts
 │   ├── package.json / tsconfig.json

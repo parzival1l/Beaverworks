@@ -1,8 +1,8 @@
-# Beaverworks
+# Altru
 
 **Altru** is for people who want giving to feel deliberate, not overwhelming—especially if you’re donating in Canada or care about what’s happening closer to home in Québec. You share what matters to you; we help you discover charities that fit your values and how you like to give. Rich profiles and a donation tax calculator let you weigh options with both heart and practicality. The details you see are grounded in **public registries and open records**, so you can cross-check names, status, and missions yourself—trust starts with transparency.
 
-Beaverworks is the monorepo behind Altru—the Vite/React app, Express API, and Botpress ADK agent live in `frontend/`, `backend/`, and `agent/` respectively for anyone working in the codebase.
+Altru is the monorepo behind the platform—the Vite/React app, Express API, and Botpress ADK agent live in `frontend/`, `backend/`, and `agent/` respectively for anyone working in the codebase.
 
 ![Altru app preview](./docs/assets/altru-app-preview.png)
 

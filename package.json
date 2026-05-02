@@ -1,5 +1,5 @@
 {
-  "name": "beaverworks",
+  "name": "altru",
   "private": true,
   "scripts": {
     "install:all": "npm install --prefix frontend && npm install --prefix backend && npm install --prefix agent"
