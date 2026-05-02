@@ -4,28 +4,30 @@
 
 ---
 
-## 2026-05-02 13:06 ET — Questionnaire feature: backend API + frontend form (TDD Red→Green)
+## 2026-05-02 13:15 ET — Questionnaire API: merge of `cursor/questionnaire-feature` into Altru plan
 
-- **Files:**
-  - `backend/package.json`, `backend/tsconfig.json`, `backend/jest.config.js`
-  - `backend/src/app.ts`, `backend/src/index.ts`
-  - `backend/src/routes/questionnaire.ts`
-  - `backend/src/types/questionnaire.ts`
-  - `backend/tests/questionnaire.test.ts`
-  - `frontend/package.json`, `frontend/vite.config.ts`, `frontend/tsconfig.json`, `frontend/tsconfig.node.json`, `frontend/index.html`
-  - `frontend/src/main.tsx`, `frontend/src/App.tsx`, `frontend/src/App.css`
-  - `frontend/src/test-setup.ts`
-  - `frontend/src/types/questionnaire.ts`
-  - `frontend/src/components/Questionnaire.tsx`, `frontend/src/components/Questionnaire.css`
-  - `frontend/src/__tests__/Questionnaire.test.tsx`
-  - `architecture.md`
-- **What:**
-  - **Backend (TypeScript + Express):** `POST /api/questionnaire/submit` — validates all 5 answers present, returns `{ success, submissionId, answers }`. UUID per submission for future LLM correlation. `userId` field reserved for auth integration. App exported separately from server entry point so supertest can import it cleanly.
-  - **Frontend (React + Vite):** Step-by-step questionnaire card. 5 multiple-choice questions covering cause area, geographic scope, donation mechanism, charity selection criteria, and involvement level. Progress bar, Back/Next navigation, disabled Next until answer selected, Submit on final step. Proxies `/api` to backend via Vite config. Success/error/loading states in `App.tsx`.
-  - **TDD cycle followed:** Backend — wrote 6 failing tests (RED: all 404 from stub), implemented route (GREEN: 6/6 pass). Frontend — wrote 11 failing tests (RED: all fail from stub component), implemented `Questionnaire` component (GREEN: 11/11 pass).
-  - `architecture.md` updated with stack, API contract, question table, project structure, and run/test instructions.
-- **Why:** POC questionnaire feature for the charity-matching app. Answers payload is structured to be forwarded to the LLM matching service (separate feature) once that integration is ready.
-- **Commands:** `cd backend && npm test` (6/6 ✓), `cd frontend && npm test` (11/11 ✓)
+- **Files:** `backend/` (Express `POST /api/questionnaire/submit`, Jest tests), `frontend/src/api/questionnaire.ts`, `frontend/vite.config.ts`, `frontend/src/vite-env.d.ts`, `.gitignore`, `architecture.md`, `feature-process.md`, `ACTIVITY.md`
+- **What:** Ported Express questionnaire submit from remote branch `cursor/questionnaire-feature` with **Altru four-field** answers (`causes`, `beneficiaries`, `geography`, `givingStyle`). Frontend submits via fetch; Vite dev proxies `/api` → `localhost:3001`. Client filters `mockCharities` from echoed answers; falls back to offline filter if API unavailable.
+- **Why:** Wire real submit endpoint while keeping plan-aligned questionnaire UX and mock charity data.
+- **Commands:** `cd backend && npm test` (6 passed); `cd frontend && npx vitest run && npm run build`
+
+---
+
+## 2026-05-02 13:09 ET — Product name: Givenly → Altru
+
+- **Files:** `frontend/` (UI, auth key, demo email, package name), `architecture.md`, `ACTIVITY.md`
+- **What:** Renamed platform to Altru; `localStorage` key `altru_authed`; demo sign-in `demo@altru.ca`; npm package `altru-frontend`.
+- **Why:** Branding update.
+- **Commands:** none
+
+---
+
+## 2026-05-02 13:08 ET — Frontend scaffold: Altru charity platform
+
+- **Files:** `frontend/` (new), `architecture.md`, `ACTIVITY.md`, `feature-process.md`
+- **What:** Scaffolded Vite+React frontend with Login, Questionnaire (skip-able), Dashboard + Quebec tax optimizer, Charity Detail (15 fields + financial tab), and Payment page. Hardcoded mock charities. TDD for tax logic and login.
+- **Why:** Hackathon submission — Montreal Cursor Hackathon at Botpress MTL
+- **Commands:** none committed yet — awaiting user confirmation
 
 ---
 

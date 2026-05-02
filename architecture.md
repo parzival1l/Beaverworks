@@ -6,11 +6,23 @@ Last updated: 2026-05-02
 
 ---
 
+## Frontend (confirmed)
+
+- **Framework:** Vite 5 + React 18 + TypeScript
+- **Routing:** React Router v6
+- **Styling:** Tailwind CSS v3 + Framer Motion
+- **Testing:** Vitest + `@testing-library/react`
+- **Location:** `frontend/`
+- **Questionnaire API client:** `frontend/src/api/questionnaire.ts` — `POST /api/questionnaire/submit`; dev server proxies `/api` → `http://localhost:3001` (see `frontend/vite.config.ts`). Optional env: `VITE_QUESTIONNAIRE_SUBMIT_URL` for a full URL in other deploys.
+- **Auth:** client-side only (demo), `altru_authed` in `localStorage` protects `/questionnaire`, `/dashboard`, `/charity/:id`, `/payment/:id`; `/` is login
+
+---
+
 ## System Overview
 
-Beaverworks helps users discover charities that match their personal values. Users complete a short questionnaire about their giving preferences; those answers are forwarded to an LLM-powered matching service (separate feature) that returns curated charity recommendations.
+Altru is a charity discovery frontend with a Quebec-focused donation tax optimizer. Users sign in with demo credentials, complete (or skip) a questionnaire, browse Canadian charity data (mock JSON today), view detail and a mock payment flow.
 
-**POC scope:** localhost only. No cloud infrastructure, no persistent database.
+The **questionnaire submit** path is integrated with a small **Express** API (ported from branch `cursor/questionnaire-feature`, adapted to Altru’s four-question schema). The API validates and stores submissions (in-memory echo only for now); the UI still derives charity recommendations by filtering `mockCharities` using the echoed answers until a RAG / LLM layer exists.
 
 ---
 
@@ -18,10 +30,28 @@ Beaverworks helps users discover charities that match their personal values. Use
 
 ```mermaid
 flowchart LR
-    User -->|localhost:5173| FE["Frontend\nReact + Vite"]
-    FE -->|POST /api/questionnaire/submit| BE["Backend\nExpress + TypeScript\nlocalhost:3001"]
-    BE -->|answers payload — to be wired| LLM["LLM Matching Service\n(separate feature)"]
-    BE -.->|future: auth check| Auth["Auth Service\n(separate feature)"]
+  subgraph frontend [Altru Frontend Vite React]
+    Login["/ login"]
+    Q["/questionnaire"]
+    Dash["/dashboard"]
+    Detail["/charity/:id"]
+    Pay["/payment/:id"]
+    Login -->|altru_authed| Q
+    Q -->|mode filtered state or skip all| Dash
+    Dash --> Detail --> Pay
+    ApiClient["api/questionnaire.ts"]
+    Q --> ApiClient
+    Dash --> ApiClient
+    Dash --> Mock[(mockCharities.ts)]
+    ApiClient -->|"POST submit"| Backend
+    ApiClient --> Mock
+  end
+  subgraph backend [Backend Express]
+    Submit["POST /api/questionnaire/submit"]
+    Backend --> Submit
+  end
+  User --> Login
+  Backend -.->|future| Data[(RAG / persistence)]
 ```
 
 ---
@@ -30,11 +60,23 @@ flowchart LR
 
 | Layer | Technology | Notes |
 |---|---|---|
-| Frontend | React 18 + Vite + TypeScript | Dev server: `localhost:5173`. Proxies `/api` to backend. |
-| Backend | Express + TypeScript (`tsx` for dev) | API server: `localhost:3001`. |
-| Auth | TBD (separate team feature) | `userId` field on questionnaire payload is reserved. |
-| LLM Matching | TBD (separate team feature) | Backend route is designed to forward answers. |
-| Infra | Localhost only (POC) | No cloud resources yet. |
+| Frontend | Vite 5, React 18, TypeScript, Tailwind v3, Framer Motion | `frontend/` |
+| Backend | Node 20+, Express 4, TypeScript, `tsx` dev | `backend/` — port **3001** default |
+| Data | Mock JSON in `frontend/src/data/mockCharities.ts` | Backend does not persist questionnaires yet |
+| Infra | TBD | — |
+| Auth | Demo client-side + `localStorage` flag | Not production auth |
+
+---
+
+## Routes (frontend)
+
+| Path | Page | Notes |
+|---|---|---|
+| `/` | Login | Sets `altru_authed` on success |
+| `/questionnaire` | Questionnaire | Protected; skip → `?mode=all` |
+| `/dashboard` | Dashboard | `?mode=all` \| `filtered`; tax optimizer sidebar |
+| `/charity/:id` | Charity detail | Overview + financial tab |
+| `/payment/:id` | Payment | Mock UI only |
 
 ---
 
@@ -42,47 +84,47 @@ flowchart LR
 
 ### `POST /api/questionnaire/submit`
 
-Receives the user's questionnaire answers. Designed to forward them to the LLM matching service once that integration is built.
+- **Origin:** Integrated from [`cursor/questionnaire-feature`](https://github.com/parzival1l/Beaverworks/tree/cursor/questionnaire-feature); **request shape changed** from five generic `q1`–`q5` fields to Altru’s **`QuestionnaireAnswers`** keys: `causes`, `beneficiaries`, `geography`, `givingStyle` (see `backend/src/types/questionnaire.ts` and `frontend/src/types/charity.ts`).
+- **Request body:**
 
-**Request body:**
 ```json
 {
   "answers": {
-    "q1": "string",
-    "q2": "string",
-    "q3": "string",
-    "q4": "string",
-    "q5": "string"
+    "causes": "string",
+    "beneficiaries": "string",
+    "geography": "string",
+    "givingStyle": "string"
   },
-  "userId": "string (optional — reserved for auth integration)"
+  "userId": "optional-string"
 }
 ```
 
-**Success response `200`:**
+- **Response 200:**
+
 ```json
 {
   "success": true,
-  "submissionId": "uuid-v4",
-  "answers": { "q1": "...", "q2": "...", "q3": "...", "q4": "...", "q5": "..." }
+  "submissionId": "uuid",
+  "answers": { …same as request… }
 }
 ```
 
-**Error response `400`:**
-```json
-{ "error": "Missing answers for: q3, q4, q5" }
-```
+- **Errors 400:** `{ "error": "message" }` — missing/invalid `answers`, or any required key empty/non-string.
+
+**Charity matching:** Not returned by the API yet. The frontend calls this endpoint for validation + submission id, then runs **client-side** `filterMockCharitiesByAnswers` on `mockCharities`. Replace with RAG / ranked charity IDs when the integration layer ships.
 
 ---
 
 ## Questionnaire — 5 Questions
 
-| ID | Question | Options |
-|---|---|---|
-| q1 | Which cause area resonates with you most? | Environment & Climate · Education & Youth · Health & Medical Research · Hunger & Poverty Relief · Animal Welfare |
-| q2 | Where would you like your impact to be felt? | My local community · Nationally (within the US) · Internationally / globally · Wherever the need is greatest |
-| q3 | How do you prefer your donation to create change? | Direct aid · Research & innovation · Advocacy & policy change · Education & awareness programs |
-| q4 | What matters most when choosing a charity? | Financial transparency & low overhead · Proven track record & results · Alignment with my personal values · Endorsement by trusted sources |
-| q5 | How involved would you like to be beyond donating? | Just donate — keep it simple · Volunteer opportunities · Stay informed with updates · Actively campaign or fundraise |
+Primary UI entity: **`Charity`** and nested **`FinancialData`** — see `frontend/src/types/charity.ts`. Same shape intended for future API responses.
+
+---
+
+## Run (local dev)
+
+1. **Backend:** `cd backend && npm install && npm run dev` — listens on **3001**.
+2. **Frontend:** `cd frontend && npm install && npm run dev` — Vite proxies `/api` to **3001**.
 
 ---
 
@@ -140,6 +182,11 @@ cd frontend && npm test
 ```
 
 All new feature behaviour follows **Red → Green → Refactor** TDD (see `.cursor/rules/core.mdc`).
+
+| Layer | Runner | Location |
+|---|---|---|
+| Backend | Jest + supertest | `backend/tests/` |
+| Frontend | Vitest + Testing Library | `frontend/src/__tests__/` |
 
 ---
 

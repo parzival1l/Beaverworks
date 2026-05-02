@@ -1,20 +1,25 @@
+/** Matches `QuestionnaireAnswers` in frontend `src/types/charity.ts` (Altru plan). */
 export interface QuestionnaireAnswers {
-  q1: string;
-  q2: string;
-  q3: string;
-  q4: string;
-  q5: string;
+  causes: string
+  beneficiaries: string
+  geography: string
+  givingStyle: string
 }
 
 export interface SubmitQuestionnaireRequest {
-  answers: QuestionnaireAnswers;
-  userId?: string;
+  answers: QuestionnaireAnswers
+  userId?: string
 }
 
 export interface SubmitQuestionnaireResponse {
-  success: true;
-  submissionId: string;
-  answers: QuestionnaireAnswers;
+  success: true
+  submissionId: string
+  answers: QuestionnaireAnswers
 }
 
-export const REQUIRED_QUESTION_IDS = ['q1', 'q2', 'q3', 'q4', 'q5'] as const;
+export const REQUIRED_QUESTION_IDS: readonly (keyof QuestionnaireAnswers)[] = [
+  'causes',
+  'beneficiaries',
+  'geography',
+  'givingStyle',
+]

@@ -15,65 +15,38 @@
 | Git repo cloned from `parzival1l/Beaverworks` | ✅ Done |
 | `.cursor/rules/core.mdc` (TDD + architecture update rule) | ✅ Done |
 | `.cursor/rules/git.mdc` (branch-first + ACTIVITY.md format) | ✅ Done |
-| `architecture.md` (SSOT — stack TBD, to be filled as decisions are made) | ✅ Done |
+| `architecture.md` (SSOT) | ✅ Done |
 | `feature-process.md` (this file) | ✅ Done |
 | `ACTIVITY.md` | ✅ Done |
 | `AGENTS.md` files (root, backend, frontend) updated | ✅ Done |
 
 ---
 
-### Phase 1 — Stack Decision & Initial Scaffold ✅ Complete
+### Phase 1 — Stack Decision & Initial Scaffold 🟨 In progress
 
 **Goal:** Decide on frontend/backend/infra stack and scaffold the project structure.
 
 | Item | Status |
 | --- | --- |
-| Stack decided and documented in `architecture.md` | ✅ Done |
-| Backend boilerplate — Express + TypeScript, `tsx` dev server, port 3001 | ✅ Done |
-| Frontend boilerplate — React 18 + Vite + TypeScript, port 5173 | ✅ Done |
-| Test runners configured — Jest + supertest (backend), Vitest + testing-library (frontend) | ✅ Done |
-| `architecture.md` updated with Mermaid diagram, API contract, question table | ✅ Done |
+| Frontend stack confirmed and documented in `architecture.md` | ✅ Done |
+| Frontend boilerplate (Vite 5, React 18, routes, pages, tax calculator) | ✅ Done |
+| Frontend test runner (Vitest + Testing Library) | ✅ Done |
+| Backend questionnaire API (Express + Jest) scaffold in `backend/` | ✅ Done |
+| Stack decided for backend/infra (beyond questionnaire API) | 🔲 Pending |
+| `architecture.md` Mermaid diagram reflects current flows | ✅ Done |
 
 ---
 
-### Phase 2 — Questionnaire Feature ✅ Complete
+### Phase 2 — Backend integration 🟨 In progress
 
-**Goal:** 5-question multiple-choice form that captures user charity preferences and POSTs them to the backend for LLM matching (integration pending).
-
-| Item | Status |
-| --- | --- |
-| `POST /api/questionnaire/submit` — validates 5 answers, returns `submissionId` | ✅ Done |
-| Backend tests (Jest + supertest) — 6/6 passing | ✅ Done |
-| `Questionnaire` React component — step-by-step, Back/Next/Submit, progress bar | ✅ Done |
-| Frontend tests (Vitest + testing-library) — 11/11 passing | ✅ Done |
-| Vite proxy `/api` → `localhost:3001` | ✅ Done |
-| `userId` field reserved on submit payload for auth integration | ✅ Done |
-
-**TDD note:** Both backend and frontend followed full Red → Green → Refactor cycle.
-
----
-
-### Phase 3 — Auth Integration 🔲 Not Started (separate team feature)
-
-**Goal:** Wire the auth service (built by another team member) into the questionnaire flow. Pass authenticated `userId` with the submission.
+**Goal:** Grow backend and replace mocks where appropriate.
 
 | Item | Status |
 | --- | --- |
-| Auth service API contract agreed | 🔲 Pending |
-| `userId` injected from auth context into questionnaire submit call | 🔲 Pending |
-| Backend validates/forwards `userId` | 🔲 Pending |
-
----
-
-### Phase 4 — LLM Matching Integration 🔲 Not Started (separate team feature)
-
-**Goal:** Forward questionnaire answers from `POST /api/questionnaire/submit` to the LLM charity-matching service and return results to the frontend.
-
-| Item | Status |
-| --- | --- |
-| LLM service API contract agreed | 🔲 Pending |
-| Backend forwards answers to LLM service | 🔲 Pending |
-| Frontend displays charity recommendations | 🔲 Pending |
+| `POST /api/questionnaire/submit` + `frontend/src/api/questionnaire.ts` wired (Vite proxy to port 3001) | ✅ Done |
+| RAG / ranked charity IDs from questionnaire answers | 🔲 Pending |
+| Charity listing/detail from API vs `mockCharities.ts` | 🔲 Pending |
+| Production auth (if needed) vs demo `localStorage` | 🔲 Pending |
 
 ---
 

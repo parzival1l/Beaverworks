@@ -217,12 +217,10 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-# Node
+# Node (repo-wide; frontend/backend)
 node_modules/
 dist/
 .DS_Store
-
-# Build output
 frontend/dist/
 backend/dist/
 

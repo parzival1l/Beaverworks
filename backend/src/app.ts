@@ -1,12 +1,12 @@
-import express from 'express';
-import cors from 'cors';
-import questionnaireRouter from './routes/questionnaire';
+import cors from 'cors'
+import express from 'express'
+import questionnaireRouter from './routes/questionnaire'
 
-const app = express();
+const app = express()
 
-app.use(cors());
-app.use(express.json());
+app.use(cors())
+app.use(express.json())
 
-app.use('/api/questionnaire', questionnaireRouter);
+app.use('/api/questionnaire', questionnaireRouter)
 
-export default app;
+export default app
