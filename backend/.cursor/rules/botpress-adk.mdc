@@ -1,0 +1,14 @@
+---
+description: Botpress ADK guidance for the Beaverworks TypeScript backend — agents, Node 22+, and HTTP API boundaries
+globs: backend/**/*.ts
+alwaysApply: false
+---
+
+# Botpress ADK (backend)
+
+- **Runtime**: Prefer **Node.js v22+** (matches ADK docs). Keep `engines.node` in `package.json` honest.
+- **ADK vs this repo**: This folder is a **standalone HTTP API** that can later call Botpress (ADK client, webhooks, or cloud APIs). Do not assume the ADK CLI layout unless we add an `adk`-style subfolder; keep route handlers thin and push agent logic into dedicated modules when integrations land.
+- **TypeScript**: Strict mode, ESM (`"type": "module"`, NodeNext resolution). Use shared response types in `src/types/api.ts` and keep JSON schemas on routes aligned with those types.
+- **Flow**: User journey is **questionnaire → search → results**. The questionnaire route is a stub until persistence and scoring exist; search should accept parameters that will eventually come from the questionnaire (e.g. `questionnaireSessionId` or future filter query params).
+- **Secrets**: Botpress tokens and workspace IDs via environment variables only; never commit credentials.
+- **Docs**: https://botpress.com/docs/for-developers/adk/introduction and ADK repo https://github.com/botpress/adk
