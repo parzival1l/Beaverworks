@@ -4,7 +4,7 @@
 
 Beaverworks is the monorepo behind Altru—the Vite/React app, Express API, and Botpress ADK agent live in `frontend/`, `backend/`, and `agent/` respectively for anyone working in the codebase.
 
-Altru app preview
+![Altru app preview](./docs/assets/altru-app-preview.png)
 
 ## Running locally after clone
 
@@ -18,11 +18,11 @@ That runs `npm install` inside `frontend/`, then `backend/`, then `agent/` (each
 
 If you do not want a root `package.json` script, the same idea in one shell line is `(cd frontend && npm install) && (cd backend && npm install) && (cd agent && npm install)`. To install only apps you care about—for example skipping `agent/` when you will not run search—you can still `cd` into those folders individually.
 
-Charity search needs the ADK workflow running and `**OPENAI_API_KEY**` set for the agent (`adk secret:set`; details in `[agent/README.md](agent/README.md)` and `[docs/architecture.md](docs/architecture.md)`).
+Charity search needs the ADK workflow running and **`OPENAI_API_KEY`** set for the agent (`adk secret:set`; details in [`agent/README.md`](agent/README.md) and [`docs/architecture.md`](docs/architecture.md)).
 
-### One command: `[scripts/launch-dev.sh](scripts/launch-dev.sh)`
+### One command: [`scripts/launch-dev.sh`](scripts/launch-dev.sh)
 
-From the repo root, `[scripts/launch-dev.sh](scripts/launch-dev.sh)` starts backend (:3002) and frontend (:5173), opens the app in your browser, and streams logs; **Ctrl+C** stops everything. Flags (`--with-agent`, `--no-open`, `--playwright`) and port layout are documented in the script header and via:
+From the repo root, [`scripts/launch-dev.sh`](scripts/launch-dev.sh) starts backend (:3002) and frontend (:5173), opens the app in your browser, and streams logs; **Ctrl+C** stops everything. Flags (`--with-agent`, `--no-open`, `--playwright`) and port layout are documented in the script header and via:
 
 ```bash
 bash scripts/launch-dev.sh --help
@@ -35,11 +35,9 @@ bash scripts/launch-dev.sh                 # frontend + backend (no ADK)
 bash scripts/launch-dev.sh --with-agent   # + Botpress ADK (bot :3000, console :3001); needs `adk` on PATH
 ```
 
-For deeper walkthroughs and tests, see docs/local-testing.md.
-
-Phase tracker: docs/feature-process.md.
-
-Botpress ADK reference (Markdown companion to .cursor/rules/botpress-adk.mdc): docs/botpress-adk.md.
+For deeper walkthroughs and tests, see [docs/local-testing.md](docs/local-testing.md).  
+Phase tracker: [docs/feature-process.md](docs/feature-process.md).  
+Botpress ADK reference (Markdown companion to `.cursor/rules/botpress-adk.mdc`): [docs/botpress-adk.md](docs/botpress-adk.md).
 
 Optional: regenerate agent KB artifacts from the curated seed:
 

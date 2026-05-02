@@ -4,6 +4,13 @@
 
 ---
 
+## 2026-05-02 19:08 ET — README: restore preview image + line-by-line docs links
+
+- **Files:** `README.md`, `docs/ACTIVITY.md`
+- **What:** Restored the preview image Markdown (`![Altru app preview](./docs/assets/altru-app-preview.png)`), fixed accidental inline-code wrapping around README links, and made the docs-reference sentence render line-by-line with Markdown hard breaks.
+- **Why:** The previous README edit left only image alt text and made the docs references harder to scan.
+- **Commands:** none
+
 ## 2026-05-02 19:03 ET — README: donor-first Altru intro
 
 - **Files:** `README.md`, `docs/ACTIVITY.md`
