@@ -2,6 +2,8 @@
 
 Beaverworks is the monorepo for **Altru**, a charity discovery web app aimed at Canadian donors, with emphasis on Québec and a donation tax calculator. Users sign in with demo credentials, can complete a short questionnaire, browse charity profiles, and use a filtered dashboard; search and recommendations integrate an Express API and a Botpress ADK agent (RAG over curated charity knowledge, with optional OpenAI-backed rationale). This repository holds the Vite/React frontend, the Express backend, and the ADK agent under `frontend/`, `backend/`, and `agent/` respectively.
 
+![Altru app preview](./docs/assets/altru-app-preview.png)
+
 ## Running locally after clone
 
 Requirements: **Node.js 20+** and npm. After cloning, install dependencies for all three apps in one step from the repo root:
@@ -37,23 +39,18 @@ For deeper walkthroughs and tests, see [docs/local-testing.md](docs/local-testin
 
 If you prefer not to use the launcher:
 
-1. **Frontend** — proxies `/api` → backend  
-
-   ```bash
+1. **Frontend** — proxies `/api` → backend
+  ```bash
    cd frontend && npm install && npm run dev
-   ```
-
+  ```
 2. **Backend**
-
-   ```bash
+  ```bash
    cd backend && npm install && npm run dev
-   ```
-
+  ```
 3. **Agent** — needed for `/api/search`
-
-   ```bash
+  ```bash
    cd agent && npm install && adk dev
-   ```
+  ```
 
 Optional: regenerate agent KB artifacts from the curated seed:
 

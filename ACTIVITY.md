@@ -4,6 +4,13 @@
 
 ---
 
+## 2026-05-02 — README: app preview image
+
+- **Files:** `README.md`, `docs/assets/altru-app-preview.png`, `ACTIVITY.md`
+- **What:** Moved the pasted root screenshot into `docs/assets/` with a stable filename and embedded it below the README project description.
+- **Why:** Keep repository media organized while featuring the app preview on the project landing page.
+- **Commands:** none
+
 ## 2026-05-02 — `launch-dev.sh --with-agent`: one-terminal FE + BE + ADK
 
 - **Files:** `scripts/launch-dev.sh`, `docs/local-testing.md`, `scripts/test-rag-pathway.sh` (header comment), `ACTIVITY.md`
