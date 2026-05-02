@@ -4,6 +4,13 @@
 
 ---
 
+## 2026-05-02 19:33 ET — Sync intent layer: per-folder AGENTS.md
+
+- **Files:** `AGENTS.md`, `backend/AGENTS.md`, `frontend/AGENTS.md`, `agent/AGENTS.md` (new), `data/AGENTS.md` (new), `scripts/AGENTS.md` (new), `backend/src/parsers/cra-charities/AGENTS.md` (new), `backend/src/bot/AGENTS.md` (new), `docs/ACTIVITY.md`
+- **What:** Replaced the three generic root/backend/frontend `AGENTS.md` files with module-mapped, anti-pattern-grounded versions, and added five new leaf `AGENTS.md` files covering the previously undocumented modules (Botpress agent workspace, data inputs/generated artifacts, dev/orchestration scripts, CRA TSV parser, Express ↔ ADK CLI bridge).
+- **Why:** The existing files were boilerplate TDD reminders with no architecture pointers, no contracts, no module maps, and no pitfalls. Sync-intent pass surfaced multiple non-obvious traps (ISO-8859 CRA encoding, generated-vs-curated `data/` files, secrets must come from `backend/.env` via `npm run secrets:sync`, Express must shell out to `adk workflows run` rather than HTTP, tests must inject the bot client via `setBotClient`).
+- **Commands:** none (docs only)
+
 ## 2026-05-02 19:18 ET — Repository rename: Altru
 
 - **Files:** `README.md`, `package.json`, `package-lock.json`, `backend/package.json`, `backend/package-lock.json`, `agent/package.json`, `agent/package-lock.json`, `backend/src/index.ts`, `agent/agent.config.ts`, `scripts/launch-dev.sh`, `scripts/playwright-tour.mjs`, `.cursor/rules/core.mdc`, `.cursor/rules/git.mdc`, `docs/architecture.md`, `docs/feature-process.md`, `docs/ACTIVITY.md`
