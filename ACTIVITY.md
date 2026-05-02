@@ -4,6 +4,15 @@
 
 ---
 
+## 2026-05-02 13:46 ET — Tax optimizer: over-optimal UI + version `frontend/src/lib`
+
+- **Files:** `.gitignore`, `frontend/src/lib/taxCalculator.ts`, `frontend/src/components/tax/TaxOptimizer.tsx`, `frontend/src/__tests__/taxCalculator.test.ts`, `frontend/src/pages/PaymentPage.tsx`
+- **What:** Quebec credit math + `getDonationGap` / uncapped score; three-state dashboard widget (below / optimal / above); fix root `lib/` ignore so `frontend/src/lib` is not gitignored.
+- **Why:** Ship tax demo UX and ensure `taxCalculator.ts` is tracked.
+- **Commands:** `git push origin cursor/frontend-charity-platform` (commit `27f69e5`)
+
+---
+
 ## 2026-05-02 13:15 ET — Questionnaire API: merge of `cursor/questionnaire-feature` into Altru plan
 
 - **Files:** `backend/` (Express `POST /api/questionnaire/submit`, Jest tests), `frontend/src/api/questionnaire.ts`, `frontend/vite.config.ts`, `frontend/src/vite-env.d.ts`, `.gitignore`, `architecture.md`, `feature-process.md`, `ACTIVITY.md`

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { getTaxSaved } from '../lib/taxCalculator'
+import { getTaxRebate } from '../lib/taxCalculator'
 import { BackButton } from '../components/ui/BackButton'
 import { mockCharities } from '../data/mockCharities'
 
@@ -14,7 +14,7 @@ export function PaymentPage() {
   const [isMonthly, setIsMonthly] = useState(false)
   const [name, setName] = useState('Demo Donor')
   const [showSuccess, setShowSuccess] = useState(false)
-  const estimatedTaxSaved = getTaxSaved(85000, amount)
+  const estimatedTaxSaved = getTaxRebate(85_000, amount)
 
   if (!charity) {
     return <p className="p-10">Charity not found.</p>
