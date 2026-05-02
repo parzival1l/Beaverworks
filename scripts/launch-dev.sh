@@ -6,11 +6,13 @@
 # Boots the Beaverworks dev stack and opens it in a browser.
 #   - backend:  http://localhost:3002  (express, tsx watch)
 #   - frontend: http://localhost:5173  (vite, proxies /api -> :3002)
+#   - agent (optional): Botpress ADK npm run dev in agent/ (bot :3000, console :3001)
 #
 # Usage:
-#   bash scripts/launch-dev.sh                # both servers + open browser
-#   bash scripts/launch-dev.sh --no-open      # skip auto-open
-#   bash scripts/launch-dev.sh --playwright   # also drive a headed Playwright window
+#   bash scripts/launch-dev.sh                     # FE + BE + open browser (no ADK)
+#   bash scripts/launch-dev.sh --with-agent       # FE + BE + ADK dev (one-tab logs)
+#   bash scripts/launch-dev.sh --no-open           # skip auto-open
+#   bash scripts/launch-dev.sh --playwright        # also drive a headed Playwright window
 #
 # Ctrl-C tears everything down.
 
@@ -21,11 +23,13 @@ cd "$REPO_ROOT"
 
 OPEN_BROWSER=1
 RUN_PLAYWRIGHT=0
+WITH_AGENT=0
 for arg in "$@"; do
   case "$arg" in
     --no-open)    OPEN_BROWSER=0 ;;
     --playwright) RUN_PLAYWRIGHT=1 ;;
-    -h|--help)    sed -n '1,15p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+    --with-agent) WITH_AGENT=1 ;;
+    -h|--help)    sed -n '1,20p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
     *) echo "Unknown arg: $arg" >&2; exit 2 ;;
   esac
 done
@@ -42,15 +46,59 @@ BACKEND_LOG="$LOG_DIR/backend.log"
 FRONTEND_LOG="$LOG_DIR/frontend.log"
 echo "Logs: $LOG_DIR"
 
+_CLEANING_UP=
+
 cleanup() {
+  # INT and EXIT can both run this; only tear down once (avoids duplicate lines).
+  [ -n "${_CLEANING_UP:-}" ] && return 0
+  _CLEANING_UP=1
   echo
   step "Shutting down…"
-  [ -n "${BACKEND_PID:-}" ] && kill "$BACKEND_PID" 2>/dev/null || true
   [ -n "${FRONTEND_PID:-}" ] && kill "$FRONTEND_PID" 2>/dev/null || true
+  [ -n "${BACKEND_PID:-}" ] && kill "$BACKEND_PID" 2>/dev/null || true
+  [ -n "${ADK_PID:-}" ] && kill "$ADK_PID" 2>/dev/null || true
   wait 2>/dev/null || true
   ok "Stopped."
 }
 trap cleanup EXIT INT TERM
+
+ADK_BOT_PORT="${ADK_BOT_PORT:-3000}"
+
+# ---- ADK agent (optional) -----------------------------------------------------
+if [ "$WITH_AGENT" -eq 1 ]; then
+  ADK_LOG="$LOG_DIR/adk.log"
+  step "Starting ADK in agent/ (targets bot :$ADK_BOT_PORT; logs → adk.log)"
+  command -v adk >/dev/null || {
+    warn "Botpress CLI 'adk' not on PATH — install ADK first."
+    exit 1
+  }
+  (
+    cd "$REPO_ROOT/agent" && npm run dev
+  ) >>"$ADK_LOG" 2>&1 &
+  ADK_PID=$!
+
+  ADK_READY=0
+  for _ in $(seq 1 320); do
+    if curl -s -o /dev/null --connect-timeout 1 --max-time 3 "http://127.0.0.1:$ADK_BOT_PORT/" 2>/dev/null; then
+      ok "ADK bot accepting HTTP on :$ADK_BOT_PORT"
+      ADK_READY=1
+      break
+    fi
+    if ! kill -0 "$ADK_PID" 2>/dev/null; then
+      warn "ADK process exited early — log follows:"
+      cat "$ADK_LOG"
+      exit 1
+    fi
+    sleep 0.25
+  done
+  if [ "$ADK_READY" -ne 1 ]; then
+    warn "ADK did not become ready on :$ADK_BOT_PORT within timeout — dump log:"
+    cat "$ADK_LOG"
+    exit 1
+  fi
+
+  warn "ADK runs in background (no interactive CLI panel). Inspect ${ADK_LOG} or multiplexed tail below."
+fi
 
 # ---- backend -----------------------------------------------------------------
 step "Starting backend on :$BACKEND_PORT"
@@ -92,7 +140,11 @@ echo
 ok "Up:"
 echo "    frontend → $URL"
 echo "    backend  → http://localhost:$BACKEND_PORT"
-echo "    logs     → $LOG_DIR"
+if [ "${WITH_AGENT:-0}" -eq 1 ]; then
+  echo "    ADK bot     → http://localhost:$ADK_BOT_PORT"
+  echo "    ADK console → http://localhost:${ADK_CONSOLE_PORT:-3001}"
+fi
+echo "    logs        → $LOG_DIR"
 
 if [ "$OPEN_BROWSER" -eq 1 ]; then
   if command -v open >/dev/null;     then open "$URL"
@@ -106,4 +158,8 @@ if [ "$RUN_PLAYWRIGHT" -eq 1 ]; then
 fi
 
 step "Streaming logs (Ctrl-C to stop everything)"
-tail -n +1 -f "$BACKEND_LOG" "$FRONTEND_LOG"
+if [ "${WITH_AGENT:-0}" -eq 1 ]; then
+  tail -n +1 -f "$ADK_LOG" "$BACKEND_LOG" "$FRONTEND_LOG"
+else
+  tail -n +1 -f "$BACKEND_LOG" "$FRONTEND_LOG"
+fi

@@ -23,17 +23,15 @@ export function CharityCard({
       onClick={() => onSelect(charity.id)}
     >
       <div className="mb-2 flex items-center justify-between gap-3">
-        <h3 className="text-lg font-semibold">{charity.organizationName}</h3>
+        <h3 className="text-lg font-semibold text-charcoal">
+          {charity.organizationName}
+        </h3>
         <div className="flex items-center gap-2">
           {typeof score === 'number' ? (
             <Badge variant="info">{`${Math.round(score * 100)}% match`}</Badge>
           ) : null}
           <Badge variant="info">{charity.category}</Badge>
         </div>
-        <h3 className="text-lg font-semibold text-charcoal">
-          {charity.organizationName}
-        </h3>
-        <Badge variant="info">{charity.category}</Badge>
       </div>
       <p className="mb-1 text-sm text-text-secondary">{charity.city}</p>
       {rationale ? (

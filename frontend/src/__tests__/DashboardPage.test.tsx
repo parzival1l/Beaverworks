@@ -8,6 +8,7 @@ vi.mock('../components/tax/TaxOptimizer', () => ({
 
 import { DashboardPage } from '../pages/DashboardPage'
 import { mockCharities } from '../data/mockCharities'
+import { reactRouterFuture } from '../routerFuture'
 import type { QuestionnaireAnswers } from '../types/charity'
 
 const ANSWERS: QuestionnaireAnswers = {
@@ -20,6 +21,7 @@ const ANSWERS: QuestionnaireAnswers = {
 function renderDashboard(mode: 'filtered' | 'all') {
   return render(
     <MemoryRouter
+      future={reactRouterFuture}
       initialEntries={[
         {
           pathname: '/dashboard',

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { QUESTIONS, QuestionnaireAnswers } from '../types/questionnaire';
+import { QUESTIONS, type QuestionnaireAnswers } from '../types/questionnaire';
 import './Questionnaire.css';
 
 interface Props {

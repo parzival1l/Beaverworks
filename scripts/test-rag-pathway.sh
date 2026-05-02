@@ -10,7 +10,8 @@
 #        a. STUB mode (default, no Botpress): runs Express against a stubbed
 #           bot client, hits POST /api/search, asserts a hydrated response.
 #        b. AGENT mode (--with-agent): expects `adk dev` already running in
-#           ./agent and OPENAI_API_KEY set; runs the real workflow.
+#           ./agent (unless you use `scripts/launch-dev.sh --with-agent`, which
+#           starts it for you) and OPENAI_API_KEY set; runs the real workflow.
 #
 # Usage:
 #   bash scripts/test-rag-pathway.sh                # automated tests + STUB smoke

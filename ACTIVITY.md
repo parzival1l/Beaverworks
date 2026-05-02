@@ -4,6 +4,33 @@
 
 ---
 
+## 2026-05-02 — `launch-dev.sh --with-agent`: one-terminal FE + BE + ADK
+
+- **Files:** `scripts/launch-dev.sh`, `docs/local-testing.md`, `scripts/test-rag-pathway.sh` (header comment), `ACTIVITY.md`
+- **What:** Optional `--with-agent` starts **`agent/npm run dev`** in the background before Express/Vite; health-probes `:3000`; **Ctrl+C** stops ADK too; multiplexed `tail -f`; documented trade-off (non-interactive ADK CLI).
+- **Why:** Reduce manual multi-terminal churn for full-stack local RAG.
+- **Commands:** `bash -n scripts/launch-dev.sh`
+
+---
+
+## 2026-05-02 — `docs/local-testing.md`: terminal flow + pathway flags aligned with smoke runs
+
+- **Files:** `docs/local-testing.md`, `ACTIVITY.md`
+- **What:** Documented the working multi-terminal order (`adk dev` before CLI/workflow; optional `adk workflows run …`; `--with-agent` vs `--with-agent --skip-tests`); clarified **`OPENAI_API_KEY` export** vs ADK `secrets:sync`; added troubleshooting for dev-server-not-running and script guard; matched **frontend Vitest** commands to pathway step 2c.
+- **Why:** Match commands from local terminal runs so the guide is runnable without drift from `scripts/test-rag-pathway.sh`.
+- **Commands:** none
+
+---
+
+## 2026-05-02 — Frontend: fix duplicate charity card markup; quieter tests (Vite 8 + router future + localStorage)
+
+- **Files:** `frontend/src/components/charity/CharityCard.tsx`, `frontend/src/setupTests.ts`, `frontend/src/routerFuture.ts`, `frontend/src/main.tsx`, `frontend/src/__tests__/{DashboardPage,LoginPage}.test.tsx`, `frontend/package.json`, `package-lock.json`, `architecture.md`
+- **What:** Removed duplicated title/category in `CharityCard` (Dashboard Vitest ambiguity). Opted into React Router v6 `future` flags (shared `routerFuture.ts`) on `BrowserRouter` and test `MemoryRouter`s. Test setup always defines an in-memory `localStorage` so Vitest/Vite runners never touch Node’s experimental webstorage getter. Raised `vite` to ^8 and `@vitejs/plugin-react` to ^6 to match Vitest’s bundled Vite and drop esbuild deprecation noise. Fixed `tsc -b`: `QuestionnaireAnswers` type-only import; explicit Vitest globals import in `Questionnaire.test.tsx`.
+- **Why:** CI / `scripts/test-rag-pathway.sh` frontend step was failing; merge noise from router + Vite/React plugin version skew.
+- **Commands:** `cd frontend && npm run test:run && npm run build` (recommended)
+
+---
+
 ## 2026-05-02 — Docs: local testing guide + script cross-links
 
 - **Files:** `docs/local-testing.md` (new), `scripts/{test-rag-pathway,launch-dev}.sh` (comment pointers), `architecture.md` (Testing link + tree)

@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import { Questionnaire } from '../components/Questionnaire';
 
 const ALL_ANSWERS = [
