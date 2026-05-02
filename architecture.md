@@ -13,14 +13,16 @@ Last updated: 2026-05-02
 - **Styling:** Tailwind CSS v3 + Framer Motion
 - **Testing:** Vitest + `@testing-library/react`
 - **Location:** `frontend/`
-- **API contracts:** see `frontend/src/api/questionnaire.ts` for questionnaire stub shape (`POST /api/questionnaire` TBD; today: async stub filters mock charities by tag)
+- **Questionnaire API client:** `frontend/src/api/questionnaire.ts` — `POST /api/questionnaire/submit`; dev server proxies `/api` → `http://localhost:3001` (see `frontend/vite.config.ts`). Optional env: `VITE_QUESTIONNAIRE_SUBMIT_URL` for a full URL in other deploys.
 - **Auth:** client-side only (demo), `altru_authed` in `localStorage` protects `/questionnaire`, `/dashboard`, `/charity/:id`, `/payment/:id`; `/` is login
 
 ---
 
 ## System Overview
 
-Altru is a charity discovery frontend with a Quebec-focused donation tax optimizer. Users sign in with demo credentials, complete (or skip) a questionnaire, browse mock Canadian charity data, view detail and a mock payment flow. Backend and live APIs are not wired yet; questionnaire and charity data use mocks until a real backend replaces the stub.
+Altru is a charity discovery frontend with a Quebec-focused donation tax optimizer. Users sign in with demo credentials, complete (or skip) a questionnaire, browse Canadian charity data (mock JSON today), view detail and a mock payment flow.
+
+The **questionnaire submit** path is integrated with a small **Express** API (ported from branch `cursor/questionnaire-feature`, adapted to Altru’s four-question schema). The API validates and stores submissions (in-memory echo only for now); the UI still derives charity recommendations by filtering `mockCharities` using the echoed answers until a RAG / LLM layer exists.
 
 ---
 
@@ -37,14 +39,19 @@ flowchart LR
     Login -->|altru_authed| Q
     Q -->|mode filtered state or skip all| Dash
     Dash --> Detail --> Pay
-    Stub["questionnaire.ts stub"]
-    Q --> Stub
+    ApiClient["api/questionnaire.ts"]
+    Q --> ApiClient
+    Dash --> ApiClient
     Dash --> Mock[(mockCharities.ts)]
-    Stub --> Mock
+    ApiClient -->|"POST submit"| Backend
+    ApiClient --> Mock
+  end
+  subgraph backend [Backend Express]
+    Submit["POST /api/questionnaire/submit"]
+    Backend --> Submit
   end
   User --> Login
-  Frontend -.->|future| Backend[Backend API]
-  Backend -.-> Data[(Data Store)]
+  Backend -.->|future| Data[(RAG / persistence)]
 ```
 
 ---
@@ -54,8 +61,8 @@ flowchart LR
 | Layer | Technology | Notes |
 |---|---|---|
 | Frontend | Vite 5, React 18, TypeScript, Tailwind v3, Framer Motion | `frontend/` |
-| Backend | TBD | — |
-| Data | Mock JSON in `frontend/src/data/mockCharities.ts` | Replace with API-backed model when backend exists |
+| Backend | Node 20+, Express 4, TypeScript, `tsx` dev | `backend/` — port **3001** default |
+| Data | Mock JSON in `frontend/src/data/mockCharities.ts` | Backend does not persist questionnaires yet |
 | Infra | TBD | — |
 | Auth | Demo client-side + `localStorage` flag | Not production auth |
 
@@ -75,12 +82,36 @@ flowchart LR
 
 ## API Contracts
 
-### Questionnaire (stub → future)
+### `POST /api/questionnaire/submit`
 
-- **Today:** `getFilteredCharities(answers: QuestionnaireAnswers)` in `frontend/src/api/questionnaire.ts` — simulates latency, filters `mockCharities` by tags derived from answers.
-- **Future:** `POST /api/questionnaire` with JSON body matching `QuestionnaireAnswers`; response: list of charity IDs or full `Charity[]` (to align with `frontend/src/types/charity.ts`).
+- **Origin:** Integrated from [`cursor/questionnaire-feature`](https://github.com/parzival1l/Beaverworks/tree/cursor/questionnaire-feature); **request shape changed** from five generic `q1`–`q5` fields to Altru’s **`QuestionnaireAnswers`** keys: `causes`, `beneficiaries`, `geography`, `givingStyle` (see `backend/src/types/questionnaire.ts` and `frontend/src/types/charity.ts`).
+- **Request body:**
 
-No other live API calls from the frontend yet.
+```json
+{
+  "answers": {
+    "causes": "string",
+    "beneficiaries": "string",
+    "geography": "string",
+    "givingStyle": "string"
+  },
+  "userId": "optional-string"
+}
+```
+
+- **Response 200:**
+
+```json
+{
+  "success": true,
+  "submissionId": "uuid",
+  "answers": { …same as request… }
+}
+```
+
+- **Errors 400:** `{ "error": "message" }` — missing/invalid `answers`, or any required key empty/non-string.
+
+**Charity matching:** Not returned by the API yet. The frontend calls this endpoint for validation + submission id, then runs **client-side** `filterMockCharitiesByAnswers` on `mockCharities`. Replace with RAG / ranked charity IDs when the integration layer ships.
 
 ---
 
@@ -90,13 +121,20 @@ Primary UI entity: **`Charity`** and nested **`FinancialData`** — see `fronten
 
 ---
 
+## Run (local dev)
+
+1. **Backend:** `cd backend && npm install && npm run dev` — listens on **3001**.
+2. **Frontend:** `cd frontend && npm install && npm run dev` — Vite proxies `/api` to **3001**.
+
+---
+
 ## Testing and TDD
 
 All new feature behaviour follows **Red → Green → Refactor** TDD (see `.cursor/rules/core.mdc`).
 
 | Layer | Runner | Location |
 |---|---|---|
-| Backend | TBD (e.g. `pytest`, `jest`) | `backend/tests/` |
+| Backend | Jest + supertest | `backend/tests/` |
 | Frontend | Vitest + Testing Library | `frontend/src/__tests__/` |
 
 ---

@@ -4,6 +4,15 @@
 
 ---
 
+## 2026-05-02 13:15 ET — Questionnaire API: merge of `cursor/questionnaire-feature` into Altru plan
+
+- **Files:** `backend/` (Express `POST /api/questionnaire/submit`, Jest tests), `frontend/src/api/questionnaire.ts`, `frontend/vite.config.ts`, `frontend/src/vite-env.d.ts`, `.gitignore`, `architecture.md`, `feature-process.md`, `ACTIVITY.md`
+- **What:** Ported Express questionnaire submit from remote branch `cursor/questionnaire-feature` with **Altru four-field** answers (`causes`, `beneficiaries`, `geography`, `givingStyle`). Frontend submits via fetch; Vite dev proxies `/api` → `localhost:3001`. Client filters `mockCharities` from echoed answers; falls back to offline filter if API unavailable.
+- **Why:** Wire real submit endpoint while keeping plan-aligned questionnaire UX and mock charity data.
+- **Commands:** `cd backend && npm test` (6 passed); `cd frontend && npx vitest run && npm run build`
+
+---
+
 ## 2026-05-02 13:09 ET — Product name: Givenly → Altru
 
 - **Files:** `frontend/` (UI, auth key, demo email, package name), `architecture.md`, `ACTIVITY.md`

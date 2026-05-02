@@ -31,19 +31,20 @@
 | Frontend stack confirmed and documented in `architecture.md` | ✅ Done |
 | Frontend boilerplate (Vite 5, React 18, routes, pages, tax calculator) | ✅ Done |
 | Frontend test runner (Vitest + Testing Library) | ✅ Done |
-| Stack decided for backend/infra | 🔲 Pending |
-| Backend boilerplate (dependencies, entry point) | 🔲 Pending |
+| Backend questionnaire API (Express + Jest) scaffold in `backend/` | ✅ Done |
+| Stack decided for backend/infra (beyond questionnaire API) | 🔲 Pending |
 | `architecture.md` Mermaid diagram reflects current flows | ✅ Done |
 
 ---
 
-### Phase 2 — Backend integration 🔲 Not started
+### Phase 2 — Backend integration 🟨 In progress
 
-**Goal:** Replace questionnaire stub and mock data with live API when backend is ready.
+**Goal:** Grow backend and replace mocks where appropriate.
 
 | Item | Status |
 | --- | --- |
-| `POST /api/questionnaire` (or equivalent) + wire `frontend/src/api/questionnaire.ts` | 🔲 Pending |
+| `POST /api/questionnaire/submit` + `frontend/src/api/questionnaire.ts` wired (Vite proxy to port 3001) | ✅ Done |
+| RAG / ranked charity IDs from questionnaire answers | 🔲 Pending |
 | Charity listing/detail from API vs `mockCharities.ts` | 🔲 Pending |
 | Production auth (if needed) vs demo `localStorage` | 🔲 Pending |
 

@@ -216,3 +216,14 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Node (repo-wide; frontend/backend)
+node_modules/
+dist/
+.DS_Store
+frontend/dist/
+backend/dist/
+
+# Environment
+.env
+.env.*
