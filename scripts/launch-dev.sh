@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # scripts/launch-dev.sh
 #
+# Human-oriented guide: docs/local-testing.md
+#
 # Boots the Beaverworks dev stack and opens it in a browser.
 #   - backend:  http://localhost:3002  (express, tsx watch)
 #   - frontend: http://localhost:5173  (vite, proxies /api -> :3002)

@@ -4,6 +4,24 @@
 
 ---
 
+## 2026-05-02 — Docs: local testing guide + script cross-links
+
+- **Files:** `docs/local-testing.md` (new), `scripts/{test-rag-pathway,launch-dev}.sh` (comment pointers), `architecture.md` (Testing link + tree)
+- **What:** Consolidated **launch + test** instructions (ports, `bash scripts/test-rag-pathway.sh`, `bash scripts/launch-dev.sh`, real-RAG prerequisites) alongside the bash scripts already in tree.
+- **Why:** Reduce hunting across chat history for smoke vs full-stack flows.
+- **Commands:** none
+
+---
+
+## 2026-05-02 — Phase 5 tracker: reconcile `feature-process.md` + mention `test-rag-pathway`
+
+- **Files:** `feature-process.md`, `architecture.md`, `ACTIVITY.md`
+- **What:** `**feature-process.md` was stale**: it still said the Vite proxy targeted **3001** and marked **RAG as pending** after `/api/search` and the Botpress workflow had already shipped. Corrected Phase 2 (proxy → **3002**, RAG ✅, noted `scripts/test-rag-pathway.sh`). Added an explicit Phase 5 table so "docs + tracker" lines up with the plan. Listed `test-rag-pathway.sh` under **architecture.md** Testing + Project Structure.
+- **Why:** Cursor's Phase 5 todo looked unfinished because **the todo wasn't flipped**, not because `**architecture.md` was blank** — SSOT already described the bridge.
+- **Commands:** none
+
+---
+
 ## 2026-05-02 — Align demo script + architecture with Express→ADK bridge
 
 - **Files:** `agent/DEMO-SCRIPT-60s.md`, `architecture.md`, `ACTIVITY.md`

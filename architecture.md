@@ -272,15 +272,19 @@ Beaverworks/
 │   ├── charities.cra.json          # 50 CRA-imported charities (generated)
 │   └── Charities_results_*.txt     # raw CRA TSV input
 ├── scripts/
-│   └── ingest-charities.ts         # data/charities.seed.json → agent/data/...
+│   ├── ingest-charities.ts         # data/charities.seed.json → agent/data/...
+│   └── test-rag-pathway.sh          # CI-ish smoke (ingest → tests → POST /api/search)
 ├── architecture.md
 ├── ACTIVITY.md
-└── feature-process.md
-```
+├── feature-process.md
+└── docs/
+    └── local-testing.md               # scripts, ports, RAG smoke + dev launch
 
 ---
 
 ## Testing
+
+Canonical **how to run everything** (scripts, ports, flags): [`docs/local-testing.md`](docs/local-testing.md).
 
 ```bash
 # Backend (Jest + supertest)
@@ -288,6 +292,9 @@ cd backend && npm test
 
 # Frontend (Vitest + @testing-library/react)
 cd frontend && npm test
+
+# RAG pathway smoke (ingest → focused tests → live POST /api/search on :3099 with stub bot client unless --with-agent)
+bash scripts/test-rag-pathway.sh
 ```
 
 All new feature behaviour follows **Red → Green → Refactor** TDD (see `.cursor/rules/core.mdc`).

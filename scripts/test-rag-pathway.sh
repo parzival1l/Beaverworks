@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # scripts/test-rag-pathway.sh
 #
+# Human-oriented guide: docs/local-testing.md
+#
 # End-to-end smoke for the new /api/search RAG pathway:
 #   1. Regenerate the charity corpus from the seed.
 #   2. Run automated tests (backend Jest, frontend Vitest, type-checks).
