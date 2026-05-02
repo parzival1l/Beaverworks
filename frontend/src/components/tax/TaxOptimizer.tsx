@@ -15,9 +15,6 @@ const currency = new Intl.NumberFormat('en-CA', {
   maximumFractionDigits: 0,
 })
 
-const COLOR_GIVE = '#27AE60'
-const COLOR_WARM = '#E67E22'
-
 function formatMoneyPlain(n: number): string {
   return n.toLocaleString('en-CA')
 }
@@ -71,8 +68,6 @@ export function TaxOptimizer({
   const aboveAmount = Math.max(0, donation - 200)
 
   const barWidth = Math.min(score, 100)
-  const barFillColor =
-    state === 'above' ? COLOR_WARM : COLOR_GIVE
 
   const progressHelpText = (() => {
     if (donation === 0) {
@@ -86,13 +81,11 @@ export function TaxOptimizer({
     }
     return (
       <>
-        <span className="block font-medium" style={{ color: COLOR_WARM }}>
-          {score}% of optimal
-        </span>
-        <span className="mt-1 block" style={{ color: COLOR_WARM }}>
+        <span className="block font-medium text-warm">{score}% of optimal</span>
+        <span className="mt-1 block text-warm">
           You&apos;re {currency.format(excessAmount)} above your optimal donation
         </span>
-        <span className="mt-1 block text-xs text-text-secondary">
+        <span className="mt-1 block text-xs text-charcoal-muted">
           Your extra {currency.format(excessAmount)} still earns a {abovePct}%
           tax credit — nothing is wasted.
         </span>
@@ -100,26 +93,22 @@ export function TaxOptimizer({
     )
   })()
 
-  const cardBorderColor = state === 'above' ? COLOR_WARM : '#C0392B'
-
   return (
-    <aside className="sticky top-4 space-y-6 rounded-2xl border border-border bg-cream p-6 shadow-sm">
+    <aside className="sticky top-4 space-y-6 rounded-2xl border-t-4 border-t-trust border border-divider bg-white p-6 shadow-sm">
       <header>
-        <h2 className="text-xl font-semibold text-text-primary">
-          Quebec tax optimizer
-        </h2>
-        <p className="mt-1 text-sm text-text-secondary">
+        <h2 className="text-xl font-semibold text-trust">Quebec tax optimizer</h2>
+        <p className="mt-1 text-sm text-charcoal-muted">
           See your rebate, net cost, and recommended donation in real time.
         </p>
       </header>
 
       {/* Section 1: inputs */}
-      <section className="space-y-5 rounded-xl border border-border bg-white p-4">
+      <section className="space-y-5 rounded-xl border border-divider bg-ivory p-4">
         <div>
-          <label className="block text-sm font-medium text-text-primary">
+          <label className="block text-sm font-medium text-charcoal">
             Annual income (Quebec)
           </label>
-          <p className="mt-0.5 text-xs text-text-secondary">
+          <p className="mt-0.5 text-xs text-charcoal-muted">
             Used only to calculate your tax bracket
           </p>
           <input
@@ -129,9 +118,9 @@ export function TaxOptimizer({
             step={1_000}
             value={income}
             onChange={(e) => setIncome(Number(e.target.value))}
-            className="mt-3 w-full accent-cherry"
+            className="mt-3 w-full accent-trust"
           />
-          <p className="mt-2 font-mono text-sm font-semibold text-text-primary">
+          <p className="mt-2 font-mono text-sm font-semibold text-charcoal">
             ${formatMoneyPlain(income)}
           </p>
           <input
@@ -145,12 +134,12 @@ export function TaxOptimizer({
               if (Number.isFinite(v))
                 setIncome(Math.min(300_000, Math.max(30_000, v)))
             }}
-            className="mt-2 w-full rounded-lg border border-border px-3 py-2 font-mono text-sm"
+            className="mt-2 w-full rounded-lg border border-form bg-white px-3 py-2 font-mono text-sm text-charcoal focus:border-trust focus:outline-none focus:ring-2 focus:ring-trust/30"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-text-primary">
+          <label className="block text-sm font-medium text-charcoal">
             I want to donate
           </label>
           <input
@@ -160,9 +149,9 @@ export function TaxOptimizer({
             step={50}
             value={donation}
             onChange={(e) => setDonation(Number(e.target.value))}
-            className="mt-3 w-full accent-cherry"
+            className="mt-3 w-full accent-trust"
           />
-          <p className="mt-2 font-mono text-sm font-semibold text-text-primary">
+          <p className="mt-2 font-mono text-sm font-semibold text-charcoal">
             ${formatMoneyPlain(donation)}
           </p>
           <input
@@ -176,47 +165,45 @@ export function TaxOptimizer({
               if (Number.isFinite(v))
                 setDonation(Math.min(10_000, Math.max(0, v)))
             }}
-            className="mt-2 w-full rounded-lg border border-border px-3 py-2 font-mono text-sm"
+            className="mt-2 w-full rounded-lg border border-form bg-white px-3 py-2 font-mono text-sm text-charcoal focus:border-trust focus:outline-none focus:ring-2 focus:ring-trust/30"
           />
         </div>
       </section>
 
       {/* Section 2: your breakdown */}
       {donation > 0 ? (
-        <section className="space-y-3 rounded-xl border border-border bg-white p-4">
-          <h3 className="text-base font-semibold text-text-primary">
-            Your donation breakdown
-          </h3>
-          <div className="overflow-hidden rounded-lg border border-border bg-cream/50">
+        <section className="space-y-3 rounded-xl border border-divider bg-ivory p-4">
+          <h3 className="text-base font-semibold text-trust">Your donation breakdown</h3>
+          <div className="overflow-hidden rounded-lg border border-divider bg-ivory-dark/50">
             <table className="w-full border-collapse font-mono text-sm">
               <tbody>
-                <tr className="border-b border-border">
-                  <td className="px-3 py-2 text-text-secondary">
+                <tr className="border-b border-divider">
+                  <td className="px-3 py-2 text-charcoal-muted">
                     Your donation:
                   </td>
-                  <td className="px-3 py-2 text-right font-medium text-text-primary">
+                  <td className="px-3 py-2 text-right font-medium text-charcoal">
                     ${formatMoneyPlain(donation)}
                   </td>
                 </tr>
                 <tr>
-                  <td colSpan={2} className="border-b border-border px-0">
-                    <div className="h-px bg-border" />
+                  <td colSpan={2} className="border-b border-divider px-0">
+                    <div className="h-px bg-divider" />
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-3 py-2 text-text-secondary">
+                  <td className="px-3 py-2 text-charcoal-muted">
                     First ${formatMoneyPlain(firstPortion)} × 35% credit
                   </td>
-                  <td className="px-3 py-2 text-right text-text-primary">
+                  <td className="px-3 py-2 text-right text-charcoal">
                     ${formatMoneyPlain(Math.round(firstRebate))}
                   </td>
                 </tr>
                 {aboveAmount > 0 ? (
                   <tr>
-                    <td className="px-3 py-2 text-text-secondary">
+                    <td className="px-3 py-2 text-charcoal-muted">
                       Next ${formatMoneyPlain(aboveAmount)} × {abovePct}% credit
                     </td>
-                    <td className="px-3 py-2 text-right text-text-primary">
+                    <td className="px-3 py-2 text-right text-charcoal">
                       $
                       {formatMoneyPlain(
                         Math.round(aboveAmount * aboveRate),
@@ -225,30 +212,30 @@ export function TaxOptimizer({
                   </tr>
                 ) : null}
                 <tr>
-                  <td colSpan={2} className="border-b border-border px-0">
-                    <div className="h-px bg-border" />
+                  <td colSpan={2} className="border-b border-divider px-0">
+                    <div className="h-px bg-divider" />
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-3 py-2 font-medium text-text-primary">
+                  <td className="px-3 py-2 font-medium text-charcoal">
                     Total tax rebate:
                   </td>
-                  <td className="px-3 py-2 text-right font-bold text-green-700">
+                  <td className="px-3 py-2 text-right font-bold text-give-dark">
                     ${formatMoneyPlain(rebate)}
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-3 py-2 text-gray-500">Net cost to you:</td>
-                  <td className="px-3 py-2 text-right text-gray-500">
+                  <td className="px-3 py-2 text-charcoal-muted">Net cost to you:</td>
+                  <td className="px-3 py-2 text-right text-charcoal-muted">
                     ${formatMoneyPlain(netCost)}
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-3 py-2 text-text-secondary">
+                  <td className="px-3 py-2 text-charcoal-muted">
                     Effective discount:
                   </td>
                   <td className="px-3 py-2 text-right">
-                    <span className="inline-flex rounded-full bg-stone-200 px-2 py-0.5 text-xs font-semibold text-stone-800">
+                    <span className="inline-flex rounded-full bg-ivory-dark px-2 py-0.5 text-xs font-semibold text-charcoal">
                       {discountPct}%
                     </span>
                   </td>
@@ -256,9 +243,9 @@ export function TaxOptimizer({
               </tbody>
             </table>
           </div>
-          <p className="text-sm leading-relaxed text-text-primary">
+          <p className="text-sm leading-relaxed text-charcoal">
             Every $1 you donate above $200 costs you just{' '}
-            <strong className="text-cherry">${netPerDollarAbove200}</strong> —
+            <strong className="text-trust">${netPerDollarAbove200}</strong> —
             the government covers the rest.
           </p>
         </section>
@@ -266,46 +253,37 @@ export function TaxOptimizer({
 
       {/* Section 3: Altru recommends */}
       <section className="space-y-3">
-        <h3 className="text-base font-semibold text-text-primary">
-          Altru recommends
-        </h3>
-        <div
-          className="rounded-xl border border-red-100 bg-[#FDF2F2] py-4 pl-5 pr-4"
-          style={{
-            borderLeftWidth: 4,
-            borderLeftColor: cardBorderColor,
-            transition: 'border-color 300ms ease',
-          }}
-        >
+        <h3 className="text-base font-semibold text-trust">Altru recommends</h3>
+        <div className="rounded-xl border border-trust/20 border-l-4 border-l-trust bg-trust-muted py-4 pl-5 pr-4">
           {state === 'above' ? (
             <div className="space-y-2 font-mono text-sm">
               <div className="flex justify-between gap-4">
-                <span className="text-text-secondary">Your donation:</span>
-                <span className="text-right font-medium text-text-primary">
+                <span className="text-charcoal-muted">Your donation:</span>
+                <span className="text-right font-medium text-charcoal">
                   ${formatMoneyPlain(donation)}
                 </span>
               </div>
               <div className="flex justify-between gap-4">
-                <span className="text-text-secondary">Expected rebate:</span>
-                <span className="text-right font-medium text-green-700">
+                <span className="text-charcoal-muted">Expected rebate:</span>
+                <span className="text-right font-medium text-give-dark">
                   ${formatMoneyPlain(rebate)}
                 </span>
               </div>
               <div className="flex justify-between gap-4">
-                <span className="text-text-secondary">Your net cost:</span>
-                <span className="text-right text-gray-500">
+                <span className="text-charcoal-muted">Your net cost:</span>
+                <span className="text-right text-charcoal-muted">
                   ${formatMoneyPlain(netCost)}
                 </span>
               </div>
-              <div className="my-2 border-t border-border" />
+              <div className="my-2 border-t border-divider" />
               <div>
                 <div className="flex justify-between gap-4">
-                  <span className="text-text-secondary">Optimal was:</span>
-                  <span className="text-right font-medium text-text-primary">
+                  <span className="text-charcoal-muted">Optimal was:</span>
+                  <span className="text-right font-medium text-charcoal">
                     ${formatMoneyPlain(optimal)}
                   </span>
                 </div>
-                <p className="mt-3 text-sm leading-snug text-text-secondary">
+                <p className="mt-3 text-sm leading-snug text-charcoal-muted">
                   You&apos;ve donated {currency.format(excessAmount)} more than
                   optimal — and that&apos;s okay.
                 </p>
@@ -314,29 +292,29 @@ export function TaxOptimizer({
           ) : (
             <div className="space-y-2 font-mono text-sm">
               <div className="flex justify-between gap-4">
-                <span className="text-text-secondary">
+                <span className="text-charcoal-muted">
                   Optimal donation for your income:
                 </span>
-                <span className="text-right font-medium text-text-primary">
+                <span className="text-right font-medium text-charcoal">
                   ${formatMoneyPlain(optimal)}
                 </span>
               </div>
               <div className="flex justify-between gap-4">
-                <span className="text-text-secondary">Expected rebate:</span>
-                <span className="text-right font-medium text-green-700">
+                <span className="text-charcoal-muted">Expected rebate:</span>
+                <span className="text-right font-medium text-give-dark">
                   ${formatMoneyPlain(optimalRebate)}
                 </span>
               </div>
               <div className="flex justify-between gap-4">
-                <span className="text-text-secondary">Your net cost:</span>
-                <span className="text-right text-gray-500">
+                <span className="text-charcoal-muted">Your net cost:</span>
+                <span className="text-right text-charcoal-muted">
                   ${formatMoneyPlain(optimalNet)}
                 </span>
               </div>
               <div className="flex justify-between gap-4">
-                <span className="text-text-secondary">Effective discount:</span>
+                <span className="text-charcoal-muted">Effective discount:</span>
                 <span className="text-right">
-                  <span className="inline-flex rounded-full bg-white/80 px-2 py-0.5 text-xs font-semibold text-stone-800">
+                  <span className="inline-flex rounded-full bg-white/80 px-2 py-0.5 text-xs font-semibold text-charcoal">
                     {optimalDiscount}%
                   </span>
                 </span>
@@ -346,29 +324,21 @@ export function TaxOptimizer({
         </div>
 
         <div>
-          <p className="mb-1 text-xs font-medium text-text-secondary">
+          <p className="mb-1 text-xs font-medium text-charcoal-muted">
             Tax optimization score
           </p>
-          <div
-            className="h-2.5 w-full overflow-hidden rounded-full bg-cream-dark"
-            style={{ height: 10 }}
-          >
+          <div className="h-2.5 w-full overflow-hidden rounded-full bg-ivory-dark">
             <div
-              className="h-full rounded-full"
-              style={{
-                width: `${barWidth}%`,
-                borderRadius: 999,
-                background: barFillColor,
-                transition: 'width 300ms ease, background-color 300ms ease',
-              }}
+              className="h-full rounded-full bg-give transition-all duration-300"
+              style={{ width: `${barWidth}%` }}
             />
           </div>
           <div
             className={`mt-2 text-sm ${
               donation === 0 || state === 'below'
-                ? 'text-text-secondary'
+                ? 'text-charcoal-muted'
                 : state === 'optimal'
-                  ? 'font-medium text-green-800'
+                  ? 'font-medium text-give-dark'
                   : ''
             }`}
           >
@@ -380,8 +350,7 @@ export function TaxOptimizer({
           <button
             type="button"
             onClick={() => setDonation(optimal)}
-            className="w-full rounded-lg px-4 py-3 text-sm font-semibold text-white hover:opacity-90"
-            style={{ backgroundColor: COLOR_GIVE }}
+            className="w-full rounded-lg bg-give px-4 py-3 text-sm font-semibold text-white hover:bg-give-dark"
           >
             Add {currency.format(shortfallAmount)} more to reach optimal →
           </button>
@@ -389,7 +358,7 @@ export function TaxOptimizer({
       </section>
 
       {/* Section 4: disclaimer */}
-      <p className="text-xs leading-relaxed text-text-secondary">
+      <p className="text-xs leading-relaxed text-charcoal-muted">
         Tax estimates are based on 2024 Quebec and federal rates. Actual savings
         may vary. This is not tax advice — consult a professional.
       </p>

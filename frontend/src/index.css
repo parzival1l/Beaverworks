@@ -4,15 +4,20 @@
 @tailwind utilities;
 
 :root {
-  --cherry: #c0392b;
-  --cherry-dark: #922b21;
-  --cream: #faf7f2;
-  --cream-dark: #f0eae0;
-  --text-primary: #1a1a1a;
-  --text-secondary: #6b6b6b;
-  --border: #e0d9d0;
-  --success: #1a7f4b;
-  --warning: #b7791f;
+  --color-trust: #1b4f72;
+  --color-trust-light: #2e86c1;
+  --color-trust-muted: #d6eaf8;
+  --color-give: #27ae60;
+  --color-give-dark: #1e8449;
+  --color-give-light: #d5f5e3;
+  --color-warm: #e67e22;
+  --color-warm-light: #fdebd0;
+  --color-ivory: #fdfaf5;
+  --color-ivory-dark: #f0eae0;
+  --color-charcoal: #2c3e50;
+  --color-charcoal-muted: #7f8c8d;
+  --color-urgent: #c0392b;
+  --color-urgent-light: #fadbd8;
 }
 
 * {
@@ -23,13 +28,17 @@ body {
   margin: 0;
   font-family: 'Inter', system-ui, sans-serif;
   line-height: 1.6;
-  color: var(--text-primary);
-  background: var(--cream);
+  color: var(--color-charcoal);
+  background: var(--color-ivory);
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-weight: 600;
   letter-spacing: -0.02em;
+  color: var(--color-charcoal);
 }
 
 #root {
@@ -42,9 +51,21 @@ h1, h2, h3, h4 {
   position: absolute;
   inset: -20%;
   background-image:
-    radial-gradient(circle, rgba(192, 57, 43, 0.55) 4px, transparent 4px),
-    radial-gradient(circle, rgba(26, 127, 75, 0.5) 3px, transparent 3px),
-    radial-gradient(circle, rgba(183, 121, 31, 0.45) 3px, transparent 3px);
+    radial-gradient(
+      circle,
+      rgba(27, 79, 114, 0.5) 4px,
+      transparent 4px
+    ),
+    radial-gradient(
+      circle,
+      rgba(39, 174, 96, 0.5) 3px,
+      transparent 3px
+    ),
+    radial-gradient(
+      circle,
+      rgba(230, 126, 34, 0.45) 3px,
+      transparent 3px
+    );
   background-size: 80px 80px, 90px 90px, 70px 70px;
   animation: confettiFall 2.6s linear infinite;
 }

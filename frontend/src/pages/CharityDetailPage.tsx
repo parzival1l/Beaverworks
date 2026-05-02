@@ -12,7 +12,7 @@ export function CharityDetailPage() {
   const charity = useMemo(() => mockCharities.find((item) => item.id === id), [id])
 
   if (!charity) {
-    return <p className="p-10">Charity not found.</p>
+    return <p className="p-10 text-charcoal">Charity not found.</p>
   }
 
   return (
@@ -21,20 +21,22 @@ export function CharityDetailPage() {
         <BackButton to="/dashboard" />
       </div>
 
-      <div className="rounded-2xl border border-border bg-white p-6">
+      <div className="rounded-2xl border border-divider bg-ivory-dark p-6">
         <div className="mb-4 flex flex-wrap items-center gap-3">
-          <h1 className="text-3xl">{charity.organizationName}</h1>
+          <h1 className="text-3xl text-charcoal">{charity.organizationName}</h1>
           <Badge variant={charity.charityStatus === 'Active' ? 'success' : 'danger'}>
             {charity.charityStatus}
           </Badge>
         </div>
 
-        <div className="mb-5 flex gap-3">
+        <div className="mb-5 flex gap-6 border-b border-divider">
           <button
             type="button"
             onClick={() => setTab('overview')}
-            className={`rounded-lg px-4 py-2 text-sm font-semibold ${
-              tab === 'overview' ? 'bg-cherry text-white' : 'bg-cream'
+            className={`border-b-2 pb-3 text-sm font-semibold transition-colors ${
+              tab === 'overview'
+                ? 'border-trust text-trust'
+                : 'border-transparent text-charcoal-muted hover:text-charcoal'
             }`}
           >
             Overview
@@ -42,8 +44,10 @@ export function CharityDetailPage() {
           <button
             type="button"
             onClick={() => setTab('financial')}
-            className={`rounded-lg px-4 py-2 text-sm font-semibold ${
-              tab === 'financial' ? 'bg-cherry text-white' : 'bg-cream'
+            className={`border-b-2 pb-3 text-sm font-semibold transition-colors ${
+              tab === 'financial'
+                ? 'border-trust text-trust'
+                : 'border-transparent text-charcoal-muted hover:text-charcoal'
             }`}
           >
             Financial Data
@@ -77,7 +81,7 @@ export function CharityDetailPage() {
         <button
           type="button"
           onClick={() => navigate(`/payment/${charity.id}`)}
-          className="w-full rounded-xl bg-cherry px-4 py-3 text-lg font-semibold text-white hover:bg-cherry-dark"
+          className="w-full rounded-xl bg-give px-4 py-3 text-lg font-semibold text-white hover:bg-give-dark"
         >
           Donate to {charity.organizationName} →
         </button>
@@ -88,9 +92,9 @@ export function CharityDetailPage() {
 
 function Field({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-lg bg-cream p-3">
-      <p className="text-xs font-semibold uppercase text-text-secondary">{label}</p>
-      <p className="mt-1 text-sm text-text-primary">{value}</p>
+    <div className="rounded-lg bg-ivory p-3">
+      <p className="text-xs font-semibold uppercase text-charcoal-muted">{label}</p>
+      <p className="mt-1 text-sm text-charcoal">{value}</p>
     </div>
   )
 }
