@@ -216,3 +216,16 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Node
+node_modules/
+dist/
+.DS_Store
+
+# Build output
+frontend/dist/
+backend/dist/
+
+# Environment
+.env
+.env.*
