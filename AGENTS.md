@@ -9,12 +9,12 @@ This file is the root instruction file for Cursor agents in this repository.
 ## Rules
 
 - Follow `.cursor/rules/core.mdc` for TDD, architecture SSOT, and implementation style.
-- Follow `.cursor/rules/git.mdc` for git workflow, branching, and ACTIVITY.md entries.
+- Follow `.cursor/rules/git.mdc` for git workflow, branching, and [`docs/ACTIVITY.md`](docs/ACTIVITY.md) entries.
 
 ## Key Documents
 
-- `[architecture.md](./architecture.md)` — single source of truth for system design. **Update it when the stack changes.**
-- `[ACTIVITY.md](./ACTIVITY.md)` — session-level activity log. **Append an entry after every substantive change.**
+- `[docs/architecture.md](docs/architecture.md)` — single source of truth for system design. **Update it when the stack changes.**
+- `[docs/ACTIVITY.md](docs/ACTIVITY.md)` — session-level activity log. **Append an entry after every substantive change.**
 - `[docs/feature-process.md](docs/feature-process.md)` — phase-level feature tracker. Update when a phase status changes.
 
 ## Expectations

@@ -280,18 +280,18 @@ Beaverworks/
 ├── scripts/
 │   ├── ingest-charities.ts         # data/charities.seed.json → agent/data/...
 │   └── test-rag-pathway.sh          # CI-ish smoke (ingest → tests → POST /api/search)
-├── architecture.md
-├── ACTIVITY.md
 └── docs/
-    ├── botpress-adk.md                # Botpress ADK reference (Markdown companion to `.cursor/rules/botpress-adk.mdc`)
-    ├── feature-process.md             # Phase-level feature tracker
-    └── local-testing.md               # scripts, ports, RAG smoke + dev launch
+    ├── architecture.md               # SSOT system design + API contracts
+    ├── ACTIVITY.md                   # session-level changelog
+    ├── botpress-adk.md               # Botpress ADK reference (Markdown companion to `.cursor/rules/botpress-adk.mdc`)
+    ├── feature-process.md            # phase-level feature tracker
+    └── local-testing.md              # scripts, ports, RAG smoke + dev launch
 
 ---
 
 ## Testing
 
-Canonical **how to run everything** (scripts, ports, flags): `[docs/local-testing.md](docs/local-testing.md)`.
+Canonical **how to run everything** (scripts, ports, flags): `[local-testing.md](./local-testing.md)`.
 
 ```bash
 # Backend (Jest + supertest)

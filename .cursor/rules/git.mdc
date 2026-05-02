@@ -1,5 +1,5 @@
 ---
-description: Git workflow, ACTIVITY.md changelog; commit and push only after explicit confirmation
+description: Git workflow, docs/ACTIVITY.md changelog; commit and push only after explicit confirmation
 alwaysApply: false
 ---
 
@@ -28,13 +28,13 @@ For changes intended for GitHub as a PR:
 
 ### Typical Flow
 
-1. Finish task → update `ACTIVITY.md`.
+1. Finish task → update `docs/ACTIVITY.md`.
 2. Ask whether to stage and commit now (suggest a message). Wait for confirmation.
 3. If they commit and want remote updated → ask again separately before `git push`.
 
-## ACTIVITY.md Entries
+## docs/ACTIVITY.md Entries
 
-Append a timestamped entry to `ACTIVITY.md` after every substantive set of changes.
+Append a timestamped entry to `docs/ACTIVITY.md` after every substantive set of changes.
 
 ### Entry Format
 

@@ -1,8 +1,10 @@
 # Beaverworks
 
-Beaverworks is the monorepo for **Altru**, a charity discovery web app aimed at Canadian donors, with emphasis on Québec and a donation tax calculator. Users sign in with demo credentials, can complete a short questionnaire, browse charity profiles, and use a filtered dashboard; search and recommendations integrate an Express API and a Botpress ADK agent (RAG over curated charity knowledge, with optional OpenAI-backed rationale). This repository holds the Vite/React frontend, the Express backend, and the ADK agent under `frontend/`, `backend/`, and `agent/` respectively.
+**Altru** is for people who want giving to feel deliberate, not overwhelming—especially if you’re donating in Canada or care about what’s happening closer to home in Québec. You share what matters to you; we help you discover charities that fit your values and how you like to give. Rich profiles and a donation tax calculator let you weigh options with both heart and practicality. The details you see are grounded in **public registries and open records**, so you can cross-check names, status, and missions yourself—trust starts with transparency.
 
-![Altru app preview](./docs/assets/altru-app-preview.png)
+Beaverworks is the monorepo behind Altru—the Vite/React app, Express API, and Botpress ADK agent live in `frontend/`, `backend/`, and `agent/` respectively for anyone working in the codebase.
+
+Altru app preview
 
 ## Running locally after clone
 
@@ -16,11 +18,11 @@ That runs `npm install` inside `frontend/`, then `backend/`, then `agent/` (each
 
 If you do not want a root `package.json` script, the same idea in one shell line is `(cd frontend && npm install) && (cd backend && npm install) && (cd agent && npm install)`. To install only apps you care about—for example skipping `agent/` when you will not run search—you can still `cd` into those folders individually.
 
-Charity search needs the ADK workflow running and **`OPENAI_API_KEY`** set for the agent (`adk secret:set`; details in [`agent/README.md`](agent/README.md) and [`architecture.md`](architecture.md)).
+Charity search needs the ADK workflow running and `**OPENAI_API_KEY**` set for the agent (`adk secret:set`; details in `[agent/README.md](agent/README.md)` and `[docs/architecture.md](docs/architecture.md)`).
 
-### One command: [`scripts/launch-dev.sh`](scripts/launch-dev.sh)
+### One command: `[scripts/launch-dev.sh](scripts/launch-dev.sh)`
 
-From the repo root, [`scripts/launch-dev.sh`](scripts/launch-dev.sh) starts backend (:3002) and frontend (:5173), opens the app in your browser, and streams logs; **Ctrl+C** stops everything. Flags (`--with-agent`, `--no-open`, `--playwright`) and port layout are documented in the script header and via:
+From the repo root, `[scripts/launch-dev.sh](scripts/launch-dev.sh)` starts backend (:3002) and frontend (:5173), opens the app in your browser, and streams logs; **Ctrl+C** stops everything. Flags (`--with-agent`, `--no-open`, `--playwright`) and port layout are documented in the script header and via:
 
 ```bash
 bash scripts/launch-dev.sh --help
@@ -33,24 +35,11 @@ bash scripts/launch-dev.sh                 # frontend + backend (no ADK)
 bash scripts/launch-dev.sh --with-agent   # + Botpress ADK (bot :3000, console :3001); needs `adk` on PATH
 ```
 
-For deeper walkthroughs and tests, see [docs/local-testing.md](docs/local-testing.md). Phase tracker: [docs/feature-process.md](docs/feature-process.md). Botpress ADK reference (Markdown companion to `.cursor/rules/botpress-adk.mdc`): [docs/botpress-adk.md](docs/botpress-adk.md).
+For deeper walkthroughs and tests, see docs/local-testing.md.
 
-### Manual (separate terminals)
+Phase tracker: docs/feature-process.md.
 
-If you prefer not to use the launcher:
-
-1. **Frontend** — proxies `/api` → backend
-  ```bash
-   cd frontend && npm install && npm run dev
-  ```
-2. **Backend**
-  ```bash
-   cd backend && npm install && npm run dev
-  ```
-3. **Agent** — needed for `/api/search`
-  ```bash
-   cd agent && npm install && adk dev
-  ```
+Botpress ADK reference (Markdown companion to .cursor/rules/botpress-adk.mdc): docs/botpress-adk.md.
 
 Optional: regenerate agent KB artifacts from the curated seed:
 
@@ -58,4 +47,4 @@ Optional: regenerate agent KB artifacts from the curated seed:
 npx tsx scripts/ingest-charities.ts
 ```
 
-More detail on ports and APIs: [architecture.md](architecture.md).
+More detail on ports and APIs: [docs/architecture.md](docs/architecture.md).

@@ -5,7 +5,7 @@
 
 ## Rules
 - Follow `.cursor/rules/core.mdc` (root) for TDD, architecture updates, and implementation style.
-- Follow `.cursor/rules/git.mdc` (root) for git workflow and ACTIVITY.md.
+- Follow `.cursor/rules/git.mdc` (root) for git workflow and [`docs/ACTIVITY.md`](../docs/ACTIVITY.md).
 
 ## TDD (mandatory)
 - All new frontend behaviour follows **Red → Green → Refactor**.

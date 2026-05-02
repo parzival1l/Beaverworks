@@ -7,19 +7,19 @@ alwaysApply: true
 
 ## Stack Conventions
 
-Align all implementation with [architecture.md](../../architecture.md). Update that file as the stack is decided.
+Align all implementation with [docs/architecture.md](../../docs/architecture.md). Update that file as the stack is decided.
 
-- **Frontend:** TBD — update `architecture.md` when confirmed.
-- **Backend:** TBD — update `architecture.md` when confirmed.
-- **Infra:** TBD — update `architecture.md` when confirmed.
+- **Frontend:** TBD — update `docs/architecture.md` when confirmed.
+- **Backend:** TBD — update `docs/architecture.md` when confirmed.
+- **Infra:** TBD — update `docs/architecture.md` when confirmed.
 
 ### Architecture Update Rule (non-negotiable)
 
 Whenever any service, data flow, API contract, or component changes:
 
-1. **Update `architecture.md`** before or in the same commit as the code change.
-2. If `architecture.md` and the implementation disagree, **the code is wrong** — fix one or the other; never leave them out of sync.
-3. If you are adding a new service, changing an API shape, or altering auth/data flows, update the Mermaid diagram in `architecture.md`.
+1. **Update `docs/architecture.md`** before or in the same commit as the code change.
+2. If `docs/architecture.md` and the implementation disagree, **the code is wrong** — fix one or the other; never leave them out of sync.
+3. If you are adding a new service, changing an API shape, or altering auth/data flows, update the Mermaid diagram in `docs/architecture.md`.
 
 ---
 
@@ -48,7 +48,7 @@ Whenever any service, data flow, API contract, or component changes:
 ## Feature Tracking
 
 - Update [feature-process.md](../../docs/feature-process.md) only when a feature's **phase status** changes meaningfully (shipped, blocked, new phase added).
-- Keep it short. Use [ACTIVITY.md](../../ACTIVITY.md) for session-level detail.
+- Keep it short. Use [docs/ACTIVITY.md](../../docs/ACTIVITY.md) for session-level detail.
 
 ---
 
@@ -84,4 +84,4 @@ Follow [.cursor/rules/git.mdc](git.mdc) for all git operations.
 
 - **Commit and push only after explicit user confirmation.**
 - **Branch before commit** for PR-bound work: `git checkout -b cursor/<short-description>`.
-- Append an entry to `ACTIVITY.md` after every substantive set of changes.
+- Append an entry to `docs/ACTIVITY.md` after every substantive set of changes.

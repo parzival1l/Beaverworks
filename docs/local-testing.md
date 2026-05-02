@@ -1,6 +1,6 @@
 # Local testing — launch and verify
 
-This guide pairs with the repo scripts so you can **boot the stack** and **prove the RAG pathway** without hunting through `architecture.md` for every flag.
+This guide pairs with the repo scripts so you can **boot the stack** and **prove the RAG pathway** without hunting through [`docs/architecture.md`](./architecture.md) for every flag.
 
 | Port | Service |
 |------|---------|
@@ -135,4 +135,4 @@ cd frontend && npm run test:run
 | Empty `results` | Workflow ran but returned **`charityId`** values missing from `agent/data/charities.metadata.json` — rebuild corpus (**pathway step 1**, or `(cd backend && npx tsx ../scripts/ingest-charities.ts)` from repo root). |
 | Port in use | Change `PORT` in `launch-dev.sh` (`BACKEND_PORT` / `FRONTEND_PORT`) or stop the conflicting process. Smoke uses `:3099` temporarily. |
 
-Canonical system design and API contracts: [`architecture.md`](../architecture.md).
+Canonical system design and API contracts: [`docs/architecture.md`](./architecture.md).

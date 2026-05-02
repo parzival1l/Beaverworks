@@ -1,6 +1,6 @@
 # Beaverworks — Feature Process
 
-> Phase-level tracking. Update when a phase status changes meaningfully (shipped, blocked, new phase added). For session-level detail, see [ACTIVITY.md](../ACTIVITY.md).
+> Phase-level tracking. Update when a phase status changes meaningfully (shipped, blocked, new phase added). For session-level detail, see [ACTIVITY.md](./ACTIVITY.md).
 
 ---
 
@@ -14,10 +14,10 @@
 | --- | --- |
 | Git repo cloned from `parzival1l/Beaverworks` | ✅ Done |
 | `.cursor/rules/core.mdc` (TDD + architecture update rule) | ✅ Done |
-| `.cursor/rules/git.mdc` (branch-first + ACTIVITY.md format) | ✅ Done |
-| `architecture.md` (SSOT) | ✅ Done |
-| `docs/feature-process.md` (this file) | ✅ Done |
-| `ACTIVITY.md` | ✅ Done |
+| `.cursor/rules/git.mdc` (branch-first + `docs/ACTIVITY.md` format) | ✅ Done |
+| [`docs/architecture.md`](./architecture.md) (SSOT) | ✅ Done |
+| [`docs/feature-process.md`](./feature-process.md) (this file) | ✅ Done |
+| [`docs/ACTIVITY.md`](./ACTIVITY.md) | ✅ Done |
 | `AGENTS.md` files (root, backend, frontend) updated | ✅ Done |
 
 ---
@@ -28,13 +28,13 @@
 
 | Item | Status |
 | --- | --- |
-| Frontend stack confirmed and documented in `architecture.md` | ✅ Done |
+| Frontend stack confirmed and documented in `docs/architecture.md` | ✅ Done |
 | Frontend boilerplate (Vite 5, React 18, routes, pages, tax calculator) | ✅ Done |
 | Frontend test runner (Vitest + Testing Library) | ✅ Done |
 | Backend questionnaire API (Express + Jest) scaffold in `backend/` | ✅ Done |
 | Stack decided for backend/infra (beyond questionnaire API) | ✅ Done |
-| … | Express search proxy + **`agent/` Botpress ADK** + OpenAI embeddings via KB (see [`architecture.md`](../architecture.md)) |
-| `architecture.md` Mermaid diagram reflects current flows | ✅ Done |
+| … | Express search proxy + **`agent/` Botpress ADK** + OpenAI embeddings via KB (see [`docs/architecture.md`](./architecture.md)) |
+| `docs/architecture.md` Mermaid diagram reflects current flows | ✅ Done |
 
 ---
 
@@ -58,8 +58,8 @@
 
 | Item | Status |
 | --- | --- |
-| [`architecture.md`](../architecture.md) — `/api/search` contract, ports 5173 / 3002 / 3000 / 3001, Mermaid, CRA ingest + ingest script | ✅ Done |
-| [`ACTIVITY.md`](../ACTIVITY.md) — session notes (`Express→agent` bridge, secret sync, etc.) | ✅ Done |
+| [`docs/architecture.md`](./architecture.md) — `/api/search` contract, ports 5173 / 3002 / 3000 / 3001, Mermaid, CRA ingest + ingest script | ✅ Done |
+| [`docs/ACTIVITY.md`](./ACTIVITY.md) — session notes (`Express→agent` bridge, secret sync, etc.) | ✅ Done |
 | [`docs/feature-process.md`](./feature-process.md) — phase table reflects RAG + proxy port correction | ✅ Done (this edit) |
 
 ---
