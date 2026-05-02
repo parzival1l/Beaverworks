@@ -228,3 +228,6 @@ backend/dist/
 # Environment
 .env
 .env.*
+
+# Local hackathon / demo notes (not tracked)
+agent/DEMO-SCRIPT-60s.md

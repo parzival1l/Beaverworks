@@ -1,0 +1,23 @@
+{
+  "name": "beaverworks-agent",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Botpress ADK agent for Altru charity discovery RAG",
+  "scripts": {
+    "dev": "npm run secrets:sync && adk dev",
+    "build": "adk build",
+    "deploy": "adk deploy",
+    "check": "adk check",
+    "ingest": "tsx ../scripts/ingest-charities.ts",
+    "secrets:sync": "tsx scripts/sync-secrets.ts"
+  },
+  "dependencies": {
+    "@botpress/runtime": "latest",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@botpress/adk": "latest",
+    "tsx": "^4.15.0",
+    "typescript": "^5.4.5"
+  }
+}

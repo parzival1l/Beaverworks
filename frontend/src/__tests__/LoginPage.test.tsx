@@ -2,11 +2,12 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { describe, expect, it } from 'vitest'
 import { LoginPage } from '../pages/LoginPage'
+import { reactRouterFuture } from '../routerFuture'
 
 describe('LoginPage', () => {
   it('renders form, rejects wrong password, accepts correct credentials', async () => {
     render(
-      <MemoryRouter initialEntries={['/']}>
+      <MemoryRouter future={reactRouterFuture} initialEntries={['/']}>
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/questionnaire" element={<p>Questionnaire</p>} />
