@@ -15,24 +15,37 @@
 | Git repo cloned from `parzival1l/Beaverworks` | ✅ Done |
 | `.cursor/rules/core.mdc` (TDD + architecture update rule) | ✅ Done |
 | `.cursor/rules/git.mdc` (branch-first + ACTIVITY.md format) | ✅ Done |
-| `architecture.md` (SSOT — stack TBD, to be filled as decisions are made) | ✅ Done |
+| `architecture.md` (SSOT) | ✅ Done |
 | `feature-process.md` (this file) | ✅ Done |
 | `ACTIVITY.md` | ✅ Done |
 | `AGENTS.md` files (root, backend, frontend) updated | ✅ Done |
 
 ---
 
-### Phase 1 — Stack Decision & Initial Scaffold 🔲 Not Started
+### Phase 1 — Stack Decision & Initial Scaffold 🟨 In progress
 
 **Goal:** Decide on frontend/backend/infra stack and scaffold the project structure.
 
 | Item | Status |
 | --- | --- |
-| Stack decided and documented in `architecture.md` | 🔲 Pending |
+| Frontend stack confirmed and documented in `architecture.md` | ✅ Done |
+| Frontend boilerplate (Vite 5, React 18, routes, pages, tax calculator) | ✅ Done |
+| Frontend test runner (Vitest + Testing Library) | ✅ Done |
+| Stack decided for backend/infra | 🔲 Pending |
 | Backend boilerplate (dependencies, entry point) | 🔲 Pending |
-| Frontend boilerplate (dependencies, entry point) | 🔲 Pending |
-| Test runners configured (backend + frontend) | 🔲 Pending |
-| `architecture.md` updated with Mermaid diagram | 🔲 Pending |
+| `architecture.md` Mermaid diagram reflects current flows | ✅ Done |
+
+---
+
+### Phase 2 — Backend integration 🔲 Not started
+
+**Goal:** Replace questionnaire stub and mock data with live API when backend is ready.
+
+| Item | Status |
+| --- | --- |
+| `POST /api/questionnaire` (or equivalent) + wire `frontend/src/api/questionnaire.ts` | 🔲 Pending |
+| Charity listing/detail from API vs `mockCharities.ts` | 🔲 Pending |
+| Production auth (if needed) vs demo `localStorage` | 🔲 Pending |
 
 ---
 

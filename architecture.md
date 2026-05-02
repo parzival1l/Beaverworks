@@ -6,21 +6,45 @@ Last updated: 2026-05-02
 
 ---
 
+## Frontend (confirmed)
+
+- **Framework:** Vite 5 + React 18 + TypeScript
+- **Routing:** React Router v6
+- **Styling:** Tailwind CSS v3 + Framer Motion
+- **Testing:** Vitest + `@testing-library/react`
+- **Location:** `frontend/`
+- **API contracts:** see `frontend/src/api/questionnaire.ts` for questionnaire stub shape (`POST /api/questionnaire` TBD; today: async stub filters mock charities by tag)
+- **Auth:** client-side only (demo), `altru_authed` in `localStorage` protects `/questionnaire`, `/dashboard`, `/charity/:id`, `/payment/:id`; `/` is login
+
+---
+
 ## System Overview
 
-_[TODO: Add a one-paragraph description of what Beaverworks does once the product scope is defined.]_
+Altru is a charity discovery frontend with a Quebec-focused donation tax optimizer. Users sign in with demo credentials, complete (or skip) a questionnaire, browse mock Canadian charity data, view detail and a mock payment flow. Backend and live APIs are not wired yet; questionnaire and charity data use mocks until a real backend replaces the stub.
 
 ---
 
 ## Architecture Diagram
 
-_[TODO: Replace with a Mermaid diagram once the stack is decided.]_
-
 ```mermaid
 flowchart LR
-    User --> Frontend
-    Frontend --> Backend
-    Backend --> Data[(Data Store)]
+  subgraph frontend [Altru Frontend Vite React]
+    Login["/ login"]
+    Q["/questionnaire"]
+    Dash["/dashboard"]
+    Detail["/charity/:id"]
+    Pay["/payment/:id"]
+    Login -->|altru_authed| Q
+    Q -->|mode filtered state or skip all| Dash
+    Dash --> Detail --> Pay
+    Stub["questionnaire.ts stub"]
+    Q --> Stub
+    Dash --> Mock[(mockCharities.ts)]
+    Stub --> Mock
+  end
+  User --> Login
+  Frontend -.->|future| Backend[Backend API]
+  Backend -.-> Data[(Data Store)]
 ```
 
 ---
@@ -29,23 +53,40 @@ flowchart LR
 
 | Layer | Technology | Notes |
 |---|---|---|
-| Frontend | TBD | — |
+| Frontend | Vite 5, React 18, TypeScript, Tailwind v3, Framer Motion | `frontend/` |
 | Backend | TBD | — |
-| Data | TBD | — |
+| Data | Mock JSON in `frontend/src/data/mockCharities.ts` | Replace with API-backed model when backend exists |
 | Infra | TBD | — |
-| Auth | TBD | — |
+| Auth | Demo client-side + `localStorage` flag | Not production auth |
+
+---
+
+## Routes (frontend)
+
+| Path | Page | Notes |
+|---|---|---|
+| `/` | Login | Sets `altru_authed` on success |
+| `/questionnaire` | Questionnaire | Protected; skip → `?mode=all` |
+| `/dashboard` | Dashboard | `?mode=all` \| `filtered`; tax optimizer sidebar |
+| `/charity/:id` | Charity detail | Overview + financial tab |
+| `/payment/:id` | Payment | Mock UI only |
 
 ---
 
 ## API Contracts
 
-_[TODO: Document routes, request/response shapes, and auth requirements as they are built.]_
+### Questionnaire (stub → future)
+
+- **Today:** `getFilteredCharities(answers: QuestionnaireAnswers)` in `frontend/src/api/questionnaire.ts` — simulates latency, filters `mockCharities` by tags derived from answers.
+- **Future:** `POST /api/questionnaire` with JSON body matching `QuestionnaireAnswers`; response: list of charity IDs or full `Charity[]` (to align with `frontend/src/types/charity.ts`).
+
+No other live API calls from the frontend yet.
 
 ---
 
 ## Data Model
 
-_[TODO: Document entities, keys, and relationships as they are defined.]_
+Primary UI entity: **`Charity`** and nested **`FinancialData`** — see `frontend/src/types/charity.ts`. Same shape intended for future API responses.
 
 ---
 
@@ -56,7 +97,7 @@ All new feature behaviour follows **Red → Green → Refactor** TDD (see `.curs
 | Layer | Runner | Location |
 |---|---|---|
 | Backend | TBD (e.g. `pytest`, `jest`) | `backend/tests/` |
-| Frontend | TBD (e.g. `vitest`) | `frontend/src/__tests__/` |
+| Frontend | Vitest + Testing Library | `frontend/src/__tests__/` |
 
 ---
 

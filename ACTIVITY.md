@@ -4,6 +4,24 @@
 
 ---
 
+## 2026-05-02 13:09 ET — Product name: Givenly → Altru
+
+- **Files:** `frontend/` (UI, auth key, demo email, package name), `architecture.md`, `ACTIVITY.md`
+- **What:** Renamed platform to Altru; `localStorage` key `altru_authed`; demo sign-in `demo@altru.ca`; npm package `altru-frontend`.
+- **Why:** Branding update.
+- **Commands:** none
+
+---
+
+## 2026-05-02 13:08 ET — Frontend scaffold: Altru charity platform
+
+- **Files:** `frontend/` (new), `architecture.md`, `ACTIVITY.md`, `feature-process.md`
+- **What:** Scaffolded Vite+React frontend with Login, Questionnaire (skip-able), Dashboard + Quebec tax optimizer, Charity Detail (15 fields + financial tab), and Payment page. Hardcoded mock charities. TDD for tax logic and login.
+- **Why:** Hackathon submission — Montreal Cursor Hackathon at Botpress MTL
+- **Commands:** none committed yet — awaiting user confirmation
+
+---
+
 ## 2026-05-02 12:31 ET — Project scaffolding: Cursor rules, architecture, activity log, feature process
 
 - **Files:** `.cursor/rules/core.mdc`, `.cursor/rules/git.mdc`, `architecture.md`, `ACTIVITY.md`, `feature-process.md`, `AGENTS.md`, `backend/AGENTS.md`, `frontend/AGENTS.md`
