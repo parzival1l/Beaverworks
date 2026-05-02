@@ -15,7 +15,7 @@ This file is the root instruction file for Cursor agents in this repository.
 
 - `[architecture.md](./architecture.md)` — single source of truth for system design. **Update it when the stack changes.**
 - `[ACTIVITY.md](./ACTIVITY.md)` — session-level activity log. **Append an entry after every substantive change.**
-- `[feature-process.md](./feature-process.md)` — phase-level feature tracker. Update when a phase status changes.
+- `[docs/feature-process.md](docs/feature-process.md)` — phase-level feature tracker. Update when a phase status changes.
 
 ## Expectations
 

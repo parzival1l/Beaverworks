@@ -282,8 +282,9 @@ Beaverworks/
 │   └── test-rag-pathway.sh          # CI-ish smoke (ingest → tests → POST /api/search)
 ├── architecture.md
 ├── ACTIVITY.md
-├── feature-process.md
 └── docs/
+    ├── botpress-adk.md                # Botpress ADK reference (Markdown companion to `.cursor/rules/botpress-adk.mdc`)
+    ├── feature-process.md             # Phase-level feature tracker
     └── local-testing.md               # scripts, ports, RAG smoke + dev launch
 
 ---

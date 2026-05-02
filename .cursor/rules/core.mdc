@@ -47,7 +47,7 @@ Whenever any service, data flow, API contract, or component changes:
 
 ## Feature Tracking
 
-- Update [feature-process.md](../../feature-process.md) only when a feature's **phase status** changes meaningfully (shipped, blocked, new phase added).
+- Update [feature-process.md](../../docs/feature-process.md) only when a feature's **phase status** changes meaningfully (shipped, blocked, new phase added).
 - Keep it short. Use [ACTIVITY.md](../../ACTIVITY.md) for session-level detail.
 
 ---

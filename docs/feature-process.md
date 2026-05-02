@@ -1,6 +1,6 @@
 # Beaverworks — Feature Process
 
-> Phase-level tracking. Update when a phase status changes meaningfully (shipped, blocked, new phase added). For session-level detail, see [ACTIVITY.md](./ACTIVITY.md).
+> Phase-level tracking. Update when a phase status changes meaningfully (shipped, blocked, new phase added). For session-level detail, see [ACTIVITY.md](../ACTIVITY.md).
 
 ---
 
@@ -16,7 +16,7 @@
 | `.cursor/rules/core.mdc` (TDD + architecture update rule) | ✅ Done |
 | `.cursor/rules/git.mdc` (branch-first + ACTIVITY.md format) | ✅ Done |
 | `architecture.md` (SSOT) | ✅ Done |
-| `feature-process.md` (this file) | ✅ Done |
+| `docs/feature-process.md` (this file) | ✅ Done |
 | `ACTIVITY.md` | ✅ Done |
 | `AGENTS.md` files (root, backend, frontend) updated | ✅ Done |
 
@@ -33,7 +33,7 @@
 | Frontend test runner (Vitest + Testing Library) | ✅ Done |
 | Backend questionnaire API (Express + Jest) scaffold in `backend/` | ✅ Done |
 | Stack decided for backend/infra (beyond questionnaire API) | ✅ Done |
-| … | Express search proxy + **`agent/` Botpress ADK** + OpenAI embeddings via KB (see [`architecture.md`](./architecture.md)) |
+| … | Express search proxy + **`agent/` Botpress ADK** + OpenAI embeddings via KB (see [`architecture.md`](../architecture.md)) |
 | `architecture.md` Mermaid diagram reflects current flows | ✅ Done |
 
 ---
@@ -58,9 +58,9 @@
 
 | Item | Status |
 | --- | --- |
-| [`architecture.md`](./architecture.md) — `/api/search` contract, ports 5173 / 3002 / 3000 / 3001, Mermaid, CRA ingest + ingest script | ✅ Done |
-| [`ACTIVITY.md`](./ACTIVITY.md) — session notes (`Express→agent` bridge, secret sync, etc.) | ✅ Done |
-| [`feature-process.md`](./feature-process.md) — phase table reflects RAG + proxy port correction | ✅ Done (this edit) |
+| [`architecture.md`](../architecture.md) — `/api/search` contract, ports 5173 / 3002 / 3000 / 3001, Mermaid, CRA ingest + ingest script | ✅ Done |
+| [`ACTIVITY.md`](../ACTIVITY.md) — session notes (`Express→agent` bridge, secret sync, etc.) | ✅ Done |
+| [`docs/feature-process.md`](./feature-process.md) — phase table reflects RAG + proxy port correction | ✅ Done (this edit) |
 
 ---
 

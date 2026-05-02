@@ -33,7 +33,7 @@ bash scripts/launch-dev.sh                 # frontend + backend (no ADK)
 bash scripts/launch-dev.sh --with-agent   # + Botpress ADK (bot :3000, console :3001); needs `adk` on PATH
 ```
 
-For deeper walkthroughs and tests, see [docs/local-testing.md](docs/local-testing.md).
+For deeper walkthroughs and tests, see [docs/local-testing.md](docs/local-testing.md). Phase tracker: [docs/feature-process.md](docs/feature-process.md). Botpress ADK reference (Markdown companion to `.cursor/rules/botpress-adk.mdc`): [docs/botpress-adk.md](docs/botpress-adk.md).
 
 ### Manual (separate terminals)
 

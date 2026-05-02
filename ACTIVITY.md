@@ -1,8 +1,15 @@
 # Activity Log
 
-> Session-level changelog for Beaverworks. See [feature-process.md](./feature-process.md) for phase-level status.
+> Session-level changelog for Beaverworks. See [docs/feature-process.md](docs/feature-process.md) for phase-level status.
 
 ---
+
+## 2026-05-02 18:59 ET — Housekeeping: move `feature-process` + Botpress ADK doc into `docs/`
+
+- **Files:** `docs/botpress-adk.md`, `docs/feature-process.md`, `AGENTS.md`, `.cursor/rules/core.mdc`, `architecture.md`, `ACTIVITY.md`, `README.md`
+- **What:** Relocated phase tracker and Markdown Botpress ADK companion out of repo root so only core entrypoints (`README`, `architecture`, `ACTIVITY`, `AGENTS`) stay at top level; refreshed all links and project tree in architecture SSOT.
+- **Why:** Reduce root clutter without changing tooling contracts; Cursor/agent rules still cite `docs/feature-process.md` explicitly.
+- **Commands:** none
 
 ## 2026-05-02 — README: app preview image
 
