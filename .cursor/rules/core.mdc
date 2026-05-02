@@ -1,0 +1,87 @@
+---
+description: Core project rules — TDD, architecture SSOT, implementation style, before-change protocol
+alwaysApply: true
+---
+
+# Beaverworks — Core Rules
+
+## Stack Conventions
+
+Align all implementation with [architecture.md](../../architecture.md). Update that file as the stack is decided.
+
+- **Frontend:** TBD — update `architecture.md` when confirmed.
+- **Backend:** TBD — update `architecture.md` when confirmed.
+- **Infra:** TBD — update `architecture.md` when confirmed.
+
+### Architecture Update Rule (non-negotiable)
+
+Whenever any service, data flow, API contract, or component changes:
+
+1. **Update `architecture.md`** before or in the same commit as the code change.
+2. If `architecture.md` and the implementation disagree, **the code is wrong** — fix one or the other; never leave them out of sync.
+3. If you are adding a new service, changing an API shape, or altering auth/data flows, update the Mermaid diagram in `architecture.md`.
+
+---
+
+## Test-Driven Development (Mandatory for New Features)
+
+**Non-negotiable:** Do not merge or ship new feature behaviour without Red → Green → Refactor TDD.
+
+### Cycle
+
+1. **Red** — Write a failing automated test that defines the required behaviour. Run it and confirm it fails.
+2. **Green** — Write the minimum code that makes the test pass. No extras.
+3. **Refactor** — Improve structure and remove duplication. All tests must stay green.
+
+### Defaults by Layer
+
+- **Backend:** Use the project's test runner (e.g. `pytest` for Python, `jest`/`vitest` for Node). Mock external services. Tests live in `backend/tests/`.
+- **Frontend:** Use `Vitest` + `@testing-library/react` (or the framework equivalent) for component behaviour. Tests co-located or in `frontend/src/__tests__/`.
+
+### Exceptions (must be noted inline)
+
+- Pure documentation, `README`, `.gitignore`, trivial config with no new testable behaviour may skip tests. Note the exception.
+- Do not skip tests for: API handlers, meaningful business logic, auth flows, or non-trivial UI logic.
+
+---
+
+## Feature Tracking
+
+- Update [feature-process.md](../../feature-process.md) only when a feature's **phase status** changes meaningfully (shipped, blocked, new phase added).
+- Keep it short. Use [ACTIVITY.md](../../ACTIVITY.md) for session-level detail.
+
+---
+
+## Before Making Any Change
+
+Briefly state:
+
+1. **What** you are about to change and **why**.
+2. **Trade-offs or side effects** (performance, security, data shape, cost).
+3. **Ask for confirmation** if the change touches more than three files or modifies existing API contracts, auth, or data shape.
+
+---
+
+## Implementation Style
+
+- Prefer the **simplest** implementation that meets the requirement.
+- Do not add abstractions "for later."
+- Do not refactor unrelated code unless the user explicitly asks.
+- Keep handlers/controllers thin — business logic in separate, testable functions.
+
+---
+
+## Before a Large Edit
+
+- Summarize what the **current code does** in three bullet points.
+- Then explain **what you will change** and **why**.
+
+---
+
+## Git and Commits
+
+Follow [.cursor/rules/git.mdc](git.mdc) for all git operations.
+
+- **Commit and push only after explicit user confirmation.**
+- **Branch before commit** for PR-bound work: `git checkout -b cursor/<short-description>`.
+- Append an entry to `ACTIVITY.md` after every substantive set of changes.

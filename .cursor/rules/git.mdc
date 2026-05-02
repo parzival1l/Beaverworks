@@ -1,0 +1,59 @@
+---
+description: Git workflow, ACTIVITY.md changelog; commit and push only after explicit confirmation
+alwaysApply: false
+---
+
+# Beaverworks — Git and Activity Logging
+
+**When to use this rule:** Whenever you finish a task, touch versioned project files, or the user asks about history or commits.
+
+## Branch-First (Pull Requests)
+
+For changes intended for GitHub as a PR:
+
+1. `git fetch origin` and check out `main`, `git pull` to start current.
+2. `git checkout -b cursor/<short-description>` — informative name, prefix `cursor/` for agent-driven work.
+3. Make edits, then stage / commit **only after explicit user confirmation**.
+4. After commit, `git push -u origin <branch>` **only after explicit user confirmation**, then open a PR (compare → `main`).
+
+**Exception:** Direct commits on `main` only when the user explicitly requests it (e.g. hotfix). Still requires confirmation before `git commit` / `git push`.
+
+## Commit and Push Rules
+
+- **Never** run `git add` / `git commit` without **explicit user confirmation** each time.
+- **Never** run `git push` without **explicit user confirmation** each time. No auto-push.
+- Multiple prompts without committing is normal — do not assume the user wants to commit.
+- After completing substantive work, **ask** whether to commit (offer a suggested message). If declined, continue; ask again after the next batch of changes.
+- **Commit and push** are always **separate offers** unless the user explicitly says both in one message.
+
+### Typical Flow
+
+1. Finish task → update `ACTIVITY.md`.
+2. Ask whether to stage and commit now (suggest a message). Wait for confirmation.
+3. If they commit and want remote updated → ask again separately before `git push`.
+
+## ACTIVITY.md Entries
+
+Append a timestamped entry to `ACTIVITY.md` after every substantive set of changes.
+
+### Entry Format
+
+```markdown
+## YYYY-MM-DD HH:MM ET — [brief title]
+
+- **Files:** `path/one`, `path/two`
+- **What:** …
+- **Why:** …
+- **Commands:** … (or "none")
+```
+
+**Time:** Always include clock time in **US Eastern Time** with suffix `ET`.
+Get current time: `TZ=America/New_York date '+%Y-%m-%d %H:%M'`
+
+## Sensitive Files — Never Commit
+
+- `.env` / `.env.*` files
+- `*.tfstate` / `*.tfstate.backup`
+- `.terraform/` directories
+- `*.tfvars` (except `*.tfvars.example` with no real values)
+- AWS credentials, API keys, or tokens of any kind
