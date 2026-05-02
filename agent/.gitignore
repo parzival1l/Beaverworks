@@ -1,0 +1,4 @@
+node_modules
+.adk
+agent.local.json
+*.log

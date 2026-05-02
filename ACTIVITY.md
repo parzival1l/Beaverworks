@@ -4,6 +4,22 @@
 
 ---
 
+## 2026-05-02 — Align demo script + architecture with Express→ADK bridge
+
+- **Files:** `agent/DEMO-SCRIPT-60s.md`, `architecture.md`, `ACTIVITY.md`
+- **What:** Refreshed the 60s Botpress talk track (demo auth on client, frontend keyword fallback on search errors, Vite :5173 in demo beats, technical note on `adk workflows run`). Corrected `architecture.md` API behaviour and Mermaid edge: Express uses CLI bot client, not `BOTPRESS_WORKFLOW_URL` HTTP.
+- **Why:** Docs matched an older integration story; implementation is `backend/src/bot/client.ts` shelling out to ADK.
+
+---
+
+- **Files:** `agent/scripts/sync-secrets.ts` (new), `agent/package.json`, `agent/README.md`, `architecture.md`, `ACTIVITY.md`
+- **What:** Added `npm run secrets:sync` in `agent/` that reads `OPENAI_API_KEY` from `backend/.env` and calls `adk secret:set OPENAI_API_KEY <value>`. `npm run dev` now runs the sync before `adk dev`, so both the `searchCharities` workflow and the webchat conversation pick up the key without a manual `adk secret:set`.
+- **Why:** `.env` already holds the key; ADK does not auto-load `.env` (secrets live in `.adk/secrets.json`). One source of truth, no per-dev manual step.
+- **Tests:** Trivial dev-script glue, no new behaviour to test (per `core.mdc` test-exception rule).
+- **Commands:** none — awaiting user confirmation before commit.
+
+---
+
 ## 2026-05-02 13:52 ET — Color system overhaul: trust-first palette
 
 - **Files:** `frontend/tailwind.config.js`, `frontend/src/index.css`, all page and component files in `frontend/src/`
@@ -19,6 +35,15 @@
 - **What:** Quebec credit math + `getDonationGap` / uncapped score; three-state dashboard widget (below / optimal / above); fix root `lib/` ignore so `frontend/src/lib` is not gitignored.
 - **Why:** Ship tax demo UX and ensure `taxCalculator.ts` is tracked.
 - **Commands:** `git push origin cursor/frontend-charity-platform` (commit `27f69e5`)
+
+---
+
+## 2026-05-02 13:46 ET — CRA charities parser (ADK-style) in backend
+
+- **Files:** `backend/src/parsers/cra-charities/` (new folder: `schemas.ts`, `actions/parseCraTsv.ts`, `actions/mapCraRowToCharity.ts`, `actions/parseCraExport.ts`, `actions/writeSeedJson.ts`, `cli.ts`, `index.ts`, `README.md`), `backend/tests/parsers/cra-charities/` (3 test files, 16 tests), `backend/package.json` (+`zod@^3.23.8`), `data/charities.cra.json` (generated, 50 Registered charities), `architecture.md`, `ACTIVITY.md`.
+- **What:** New parser that converts the CRA TSV export (`data/Charities_results_2026-05-02-13-43-32.txt`, ISO-8859, 14 columns) into the `charities.seed.json` shape. Written TDD (Red → Green): 16 tests covering TSV parsing, row→record mapping, designation-code & status mapping, and the end-to-end pipeline with filter/limit. Structured per `.cursor/rules/botpress-adk.mdc` — one primitive per file, Zod schemas for all I/O, pure action functions, IO isolated in CLI + `writeSeedJson` — so modules can be lifted into `agent/src/actions/` as ADK `Action`s later. CLI: `npx tsx backend/src/parsers/cra-charities/cli.ts --only-registered --limit 50`.
+- **Why:** User asked to convert the CRA TSV results dump to the seed JSON format, keeping the parser self-contained and ADK-shaped so the agent can reuse it.
+- **Commands:** `cd backend && npm test` → 39 passed; `npx tsx backend/src/parsers/cra-charities/cli.ts --in data/Charities_results_2026-05-02-13-43-32.txt --out data/charities.cra.json --only-registered --limit 50` → wrote 50 records.
 
 ---
 

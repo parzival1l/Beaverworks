@@ -1,11 +1,15 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom'
-import { getFilteredCharities } from '../api/questionnaire'
+import { searchCharities } from '../api/search'
 import { CharityCard } from '../components/charity/CharityCard'
 import { TaxOptimizer } from '../components/tax/TaxOptimizer'
 import { BackButton } from '../components/ui/BackButton'
-import { mockCharities } from '../data/mockCharities'
+import { filterMockCharitiesByAnswers, mockCharities } from '../data/mockCharities'
 import type { Charity, QuestionnaireAnswers } from '../types/charity'
+import type { SearchResultItem } from '../types/search'
+
+const DEFAULT_PROMPT =
+  'Recommend Canadian charities that best match my profile.'
 
 export function DashboardPage() {
   const [searchParams] = useSearchParams()
@@ -13,33 +17,68 @@ export function DashboardPage() {
   const location = useLocation()
   const navigate = useNavigate()
 
-  const [search, setSearch] = useState('')
-  const [charities, setCharities] = useState<Charity[]>(mockCharities)
+  const [filterText, setFilterText] = useState('')
+  const [prompt, setPrompt] = useState(DEFAULT_PROMPT)
+  const [results, setResults] = useState<SearchResultItem[]>([])
+  const [fallback, setFallback] = useState<Charity[]>(mockCharities)
   const [loading, setLoading] = useState(false)
+  const initialFireDone = useRef(false)
+
+  const answers = (location.state ?? null) as QuestionnaireAnswers | null
+
+  const runSearch = useCallback(
+    async (currentPrompt: string) => {
+      if (!answers) return
+      setLoading(true)
+      try {
+        const res = await searchCharities({ answers, prompt: currentPrompt })
+        setResults(res.results)
+        setFallback([])
+      } catch {
+        setResults([])
+        setFallback(filterMockCharitiesByAnswers(answers))
+      } finally {
+        setLoading(false)
+      }
+    },
+    [answers],
+  )
 
   useEffect(() => {
-    const answers = (location.state ?? null) as QuestionnaireAnswers | null
-
     if (mode !== 'filtered' || !answers) {
-      setCharities(mockCharities)
+      setResults([])
+      setFallback(mockCharities)
       return
     }
+    if (initialFireDone.current) return
+    initialFireDone.current = true
+    void runSearch(DEFAULT_PROMPT)
+  }, [mode, answers, runSearch])
 
-    setLoading(true)
-    getFilteredCharities(answers)
-      .then((result) => setCharities(result.length > 0 ? result : mockCharities))
-      .finally(() => setLoading(false))
-  }, [location.state, mode])
+  const baseCharities: Array<{
+    charity: Charity
+    score?: number
+    rationale?: string
+  }> = useMemo(() => {
+    if (results.length > 0) {
+      return results.map((r) => ({
+        charity: r.charity,
+        score: r.score,
+        rationale: r.rationale,
+      }))
+    }
+    return fallback.map((c) => ({ charity: c }))
+  }, [results, fallback])
 
-  const visibleCharities = useMemo(() => {
-    const query = search.toLowerCase().trim()
-    if (!query) return charities
-    return charities.filter(
-      (charity) =>
+  const visible = useMemo(() => {
+    const query = filterText.toLowerCase().trim()
+    if (!query) return baseCharities
+    return baseCharities.filter(
+      ({ charity }) =>
         charity.organizationName.toLowerCase().includes(query) ||
         charity.category.toLowerCase().includes(query),
     )
-  }, [charities, search])
+  }, [baseCharities, filterText])
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-8">
@@ -59,33 +98,61 @@ export function DashboardPage() {
 
       <div className="grid gap-6 lg:grid-cols-5">
         <section className="space-y-4 lg:col-span-3">
-          {mode === 'filtered' ? (
-            <div className="rounded-xl border-l-4 border-trust bg-trust-muted px-4 py-3 text-sm text-trust">
-              Charities matched to your answers.{' '}
-              <Link
-                to="/dashboard?mode=all"
-                className="font-semibold text-trust-light underline decoration-transparent hover:text-trust hover:underline"
+          {mode === 'filtered' && answers ? (
+            <div className="rounded-xl border border-border bg-white p-4">
+              <label
+                htmlFor="search-prompt"
+                className="mb-2 block text-sm font-semibold"
               >
-                Show all
-              </Link>
+                Refine your search
+              </label>
+              <textarea
+                id="search-prompt"
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                rows={2}
+                className="w-full rounded-lg border border-border px-3 py-2 text-sm"
+                placeholder="Tell us in your own words what you want to support."
+              />
+              <div className="mt-2 flex items-center justify-between gap-3">
+                <p className="text-xs text-text-secondary">
+                  Combined with your questionnaire answers to rank Canadian
+                  charities.
+                </p>
+                <button
+                  type="button"
+                  disabled={loading || prompt.trim().length === 0}
+                  onClick={() => void runSearch(prompt)}
+                  className="rounded-lg bg-cherry px-3 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  {loading ? 'Searching...' : 'Search'}
+                </button>
+              </div>
+              <p className="mt-3 text-xs">
+                <Link to="/dashboard?mode=all" className="font-semibold text-cherry">
+                  Show all charities instead
+                </Link>
+              </p>
             </div>
           ) : null}
 
           <input
-            placeholder="Search by charity name or category"
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            className="w-full rounded-xl border border-form bg-white px-4 py-3 text-charcoal placeholder:text-charcoal-muted focus:border-trust focus:outline-none focus:ring-2 focus:ring-trust/30"
+            placeholder="Filter by charity name or category"
+            value={filterText}
+            onChange={(event) => setFilterText(event.target.value)}
+            className="w-full rounded-xl border border-border px-4 py-3"
           />
 
-          {loading ? (
-            <p className="text-sm text-charcoal-muted">Loading recommendations...</p>
+          {loading && results.length === 0 ? (
+            <p className="text-sm text-text-secondary">Loading recommendations...</p>
           ) : (
             <div className="grid gap-4">
-              {visibleCharities.map((charity) => (
+              {visible.map(({ charity, score, rationale }) => (
                 <CharityCard
                   key={charity.id}
                   charity={charity}
+                  score={score}
+                  rationale={rationale}
                   onSelect={(id) => navigate(`/charity/${id}`)}
                 />
               ))}
